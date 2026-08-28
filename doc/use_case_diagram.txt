@@ -1,0 +1,29 @@
+@startuml
+' Use-case diagram
+' paste here: https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000
+
+left to right direction
+
+actor "Visitor"        as visitor
+actor "Player"         as player
+actor "Administrator"  as admin
+
+rectangle {
+  usecase "Register"         as register
+  usecase "Login"            as login
+  usecase "Logout"           as logout
+  usecase "List Players"     as list_players
+  usecase "Play Game"        as play_game
+}
+
+player --> list_players
+player --> play_game
+player --> logout
+
+visitor --> register
+visitor --> login
+
+admin --> list_players
+admin --> logout
+
+@enduml
