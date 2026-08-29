@@ -17,67 +17,146 @@ Pour afficher ce diagramme dans VScode :
 ```mermaid
 classDiagram
     %% Business objects
-    class Player {
-        +id_player: int
-        +username: string
-        +password: string
-        +elo: int
-        +email: string
-        +pokemon_fan: bool
+
+    class User {
+        -pseudo: string
+        -password: string
+        -email: string
+        +hash_password(plain_password: str) str
+        +check_password(plain_password: str) bool
     }
-    
-    %% Data Access Objects
-    class PlayerDao {
-        +create(Player): bool
-        +find_by_id(int): Player
-        +list_all(): list[Player]
-        +delete(Player): bool
-        +update(Player): bool
-        +login(str,str): Player
+    class Visitor {
+        -visitor_name: string
     }
-    
-    %% Service layer
-    class PlayerService {
-        +create(str,str,int,str,bool): Player
-        +find_by_id(int): Player
-        +list_all(bool=False): list[Player]
-        +delete(Player): bool
-        +update(Player): Player
-        +login(str,str): Player
+    class Administrator {
+        -admin_name: string
+    }
+
+    class UserDao {
+        +create(User): bool
+        +find_by_pseudo(pseudo : string): User
+        +list_all(): list[User]
+        +delete(User): bool
+        +update(User): bool
+        +login(str,str): User
+    }
+
+    class UserService {
+        +create(str,str,str,bool): User
+        +find_by_pseudo(str): User
+        +list_all: list[User]
+        +delete(User): bool
+        +update(User): User
+        +login(str,str): User
         +username_already_used(str): bool
     }
 
-    class GameService {
-        +play(id_player:int, id_opponent:int, choice:str): dict
-        +expected_score(elo1:int, elo2:int): float
-        +compute_elo(elo1:int, elo2:int, win1:bool): tuple[int,int]
-        +update_elo(j1:Player, j2:Player, winner:Player)
-    }
     
-    %% Controllers
-    class PlayerController {
-        +list_all_players(): list[Player]
-        +player_by_id(int): Player
-        +create_player(PlayerModel): Player
-        +update_player(int, PlayerModel): str
-        +delete_player(int): str
+    class AdministratorService {
+        +view_connection_history(): list
+        +manage_account(User, action: str): bool
+        +update_db_nasa():  bool
     }
 
-    class AuthController {
+    class AdministratorController {
+        +get_connection_history(): list
+        +manage_account_request(AccountActionModel): str
+        +update_db_nasa_request(): str
+    }
+
+    
+
+    class Neo{
+        -name : string
+        -weight : int
+        -size:int
+        -age : int
+        -distance : list
+        -trajectory: string 
+        -composition : list
+        -closest_day : date
+        -origin : string
+    }
+    class NeoDao {
+        +create(Neo): bool
+        +find_by_name(string): Neo
+        +list_all(): list[Neo]
+        +delete(Neo): bool
+        +update(Neo): bool
+    }
+
+    class NeoService {
+        +search_by_name(name : str): Neo
+        +search_by_weight(weight:int): list[Neo]
+        +search_by_size(size : int): list[Neo]
+        +search_by_age(age:int): list[Neo]
+        +search_by_composition (composition : list) : list[Neo]
+        +search_by_date (closest_day : date): list[Neo]
+        +create_neo(name: str, weight: int, size: int, age : int, distance : list, trajectory: str, composition : list, closest_day : date, origin : str): Neo
+    }
+    
+    class UserController {
+        +list_all_Users(): list[User]
+        +User_by_pseudo(int): User
+        +create_User(User): User
+        +update_User(int, User): str
+        +delete_User(int): str
+    }
+
+    class Connection_Controller {
         +login(ConnexionRequest): dict
     }
 
-    class GameController {
-        +play_game(GameRequest): dict
+    class NeoController {
+        +execute_features(NeoRequest): dict
+    }
+
+    class Alert {
+        -earth_max_distance: int
+        -min_size: float
+        -targeted_neo: Neo
+        -is_active: bool
+        +check(Neo): bool
+    }
+
+    class Notifications {
+        +message : string
+        +date_message : date
+        +send_mail(email : string): bool
+    }
+
+    class Favorites {
+        -date_added: date
+        -distance_history: list
+        +add_neo(Neo): bool
+        +remove_neo(Neo): bool
+        +get_distance_history(): list
+        +export_graph(): file
     }
 
     %% Relationships
-    PlayerService ..> PlayerDao : calls
-    PlayerService ..> Player : uses
-    PlayerDao ..> Player : uses
-    GameService ..> PlayerDao : calls
-    GameService ..> Player : uses
-    PlayerController ..> PlayerService : calls
-    AuthController ..> PlayerService : calls
-    GameController ..> GameService : calls
+    User <|-- Visitor
+    User <|-- Administrator
+    UserService ..> UserDao : calls
+    UserService ..> User : uses
+    UserDao ..> User : uses
+    UserController ..> UserService : calls
+    Connection_Controller ..> UserService : calls
+    AdministratorService ..> UserService : calls
+    AdministratorService ..> Administrator : uses
+    AdministratorController ..> AdministratorService : calls
+    NeoService ..> NeoDao : calls
+    NeoService ..> Neo : uses
+    NeoDao ..> Neo : uses
+    NeoController ..> NeoService : calls
+    Visitor "1" --> "0..*" Favorites : creates
+    Favorites "0..*" --> "1" Neo
+    Notifications ..> Visitor : uses
+    Visitor "1" --> "0..*" Alert : defines
+    Alert "1" --> "0..*" Notifications : triggers
+
+
+
+
+
 ```
