@@ -70,9 +70,7 @@ classDiagram
         -name : string
         -weight : int
         -size:int
-        -age : int
-        -distance : list
-        -trajectory: string 
+        -distance : list 
         -composition : list
         -closest_day : date
         -origin : string
@@ -87,9 +85,7 @@ classDiagram
 
     class NeoService {
         +search_by_name(name : str): Neo
-        +search_by_weight(weight:int): list[Neo]
         +search_by_size(size : int): list[Neo]
-        +search_by_age(age:int): list[Neo]
         +search_by_composition (composition : list) : list[Neo]
         +search_by_date (closest_day : date): list[Neo]
         +create_neo(name: str, weight: int, size: int, age : int, distance : list, trajectory: str, composition : list, closest_day : date, origin : str): Neo
@@ -153,10 +149,5 @@ classDiagram
     Favorites "0..*" --> "1" Neo
     Notifications ..> Visitor : uses
     Visitor "1" --> "0..*" Alert : defines
-    Alert "1" --> "0..*" Notifications : triggers
-
-
-
-
-
+    Alert "1" --> "0..*" Notifications : 
 ```
