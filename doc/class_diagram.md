@@ -72,6 +72,7 @@ classDiagram
         -size:int
         -distance : list 
         -composition : list
+        -rarity : int
         -closest_day : date
         -origin : string
     }
