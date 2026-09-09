@@ -25,7 +25,7 @@ classDiagram
         +hash_password(plain_password: str) str
         +check_password(plain_password: str) bool
     }
-    class Visitor {
+    class RegularUser {
         -visitor_name: string
     }
     class Administrator {
@@ -89,7 +89,7 @@ classDiagram
         +search_by_size(size : int): list[Neo]
         +search_by_composition (composition : list) : list[Neo]
         +search_by_date (closest_day : date): list[Neo]
-        +create_neo(Neo_attributes): Neo
+        +create_neo(Neo): Neo
     }
     
     class UserController {
@@ -132,7 +132,7 @@ classDiagram
     }
 
     %% Relationships
-    User <|-- Visitor
+    User <|-- RegularUser
     User <|-- Administrator
     UserService ..> UserDao : calls
     UserService ..> User : uses
@@ -146,10 +146,10 @@ classDiagram
     NeoService ..> Neo : uses
     NeoDao ..> Neo : uses
     NeoController ..> NeoService : calls
-    Visitor "1" --> "0..*" Favorites : creates
+    User "1" --> "0..*" Favorites : creates
     Favorites "0..*" --> "1" Neo
-    Notifications ..> Visitor : uses
-    Visitor "1" --> "0..*" Alert : defines
+    Notifications ..> User : uses
+    User "1" --> "0..*" Alert : defines
     Alert "1" --> "0..*" Notifications : creates
 
 ```
