@@ -89,7 +89,7 @@ classDiagram
         +search_by_size(size : int): list[Neo]
         +search_by_composition (composition : list) : list[Neo]
         +search_by_date (closest_day : date): list[Neo]
-        +create_neo(name: str, weight: int, size: int, age : int, distance : list, trajectory: str, composition : list, closest_day : date, origin : str): Neo
+        +create_neo(Neo_attributes): Neo
     }
     
     class UserController {
@@ -150,5 +150,6 @@ classDiagram
     Favorites "0..*" --> "1" Neo
     Notifications ..> Visitor : uses
     Visitor "1" --> "0..*" Alert : defines
-    Alert "1" --> "0..*" Notifications : 
+    Alert "1" --> "0..*" Notifications : creates
+
 ```
