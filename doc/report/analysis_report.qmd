@@ -50,7 +50,7 @@ The conceptual model is built directly from the class diagram of the application
 
 The domain classes are essential for this application. 
 
-3.1 Users 
+1.1 Users 
 
 Every person who uses the application is represented by the class User, which represents what is common to all accounts: a pseudo, a password which is always stored hashed, thanks to the methods hash and check for the password. An email address is also stored and used to receive alerts. Two particular cases extend this class: 
 
@@ -60,7 +60,7 @@ Administrator: This particular user inherits everything a Visitor can do, and ad
 
 This inheritance relationship (User <- Visitor and Administrator). It could be said that an Administrator is a User with extended rights. 
 
-3.2 Near Earth Objects (NEO) 
+1.2 Near Earth Objects (NEO) 
 
 The class Neo represents a Near Earth Object, with its descriptive characteristics: name, weight, size, composition, rarity, origin, its closest recorded day, and a distance to Earth. This distance is not a fixed, it evolves over time as the object continues its trajectory in the NASA database, which is precisely why it is built so that there can be a mechanism to keep track of it. 
 
@@ -68,11 +68,11 @@ The NeoDistanceHistory class enables to folow how a NEO's distance to Earth evol
 
 This design keeps a clean separation of concerns: the Neo class describes what the object is, while NeoDistanceHistory describes how its distance behaves through time which will be the information Favourites and Alert rely on. 
 
-3.3 Favourites 
+1.3 Favourites 
 
 A User can build a personal list of favourite NEOs through the Favourites class. Each Favourites entry links one User to one Neo. 
 
-3.4 Alerts and Notifications 
+1.4 Alerts and Notifications 
 
 Every User can define one or more Alert entries, each one relying on a condition to trigger the notification. 
 

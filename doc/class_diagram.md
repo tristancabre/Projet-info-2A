@@ -92,6 +92,12 @@ classDiagram
         +create_neo(Neo): Neo
     }
     
+    class NeoDistanceHistory {
+        +id_history : int
+        #id_neo: int
+        +distance : float
+        +observation_date : date
+    }
     class UserController {
         +list_all_Users(): list[User]
         +User_by_pseudo(int): User
@@ -151,5 +157,6 @@ classDiagram
     Notifications ..> User : uses
     User "1" --> "0..*" Alert : defines
     Alert "1" --> "0..*" Notifications : creates
+    Neo ..> NeoDistanceHistory 
 
 ```
