@@ -92,11 +92,11 @@ Every User can define one or more Alert entries, each one relying on a condition
 
 The physical data model represents the different databases used to operate the application. Each table stores a specific object. The tables are linked to one another through a primary key/foreign key system. The cardinalities are directly indicated on the diagram.
 
-The two main objects in this application are users and asteroids, the latter also forming the core of the physical data model. The “NEO” table depends directly on NASA’s API, whereas the “User” table stores information about the different users registered on the application.
+The two main objects in this application are users and asteroids, the latter also forming the core of the physical data model. The “NEO” table depends directly on NASA’s API, whereas the “User” table stores information (pseudo, password, email,...) about the different users registered on the application.
 
 The favourites and alerts are stored in separate tables so that they are not lost each time the data is refreshed through the API. These two tables also establish the link between users and the asteroids. The other tables store the information required to implement the functionalities specified in the requirements.
 
-For example, the requirements state: “For each favourite NEO, a history of its distance from Earth must be maintained.” We therefore need a “NeoDistanceHistory” table linked to the “Neo” table, which stores pairs of values consisting of a date and a distance.
+For example, the requirements state: “For each favourite NEO, a history of its distance from Earth must be maintained.” We therefore need a “NeoDistanceHistory” table linked to the “Neo” table, which stores pairs of values consisting of a date and a distance. We choose the type of "distance" to be float because it is easier to build statistics then.
 
 Another functionality that requires additional data tables is the history feature. We need to store all queries in a database, along with the corresponding user and the date on which the query was made. To achieve this, we defined two data tables: one for the search history (“SearchHistory”) and the other for the users’ connection history (“ConnectionLog”).
 
