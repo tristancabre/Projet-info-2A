@@ -37,9 +37,49 @@ format:
 
 {{< pagebreak >}}
 
-## Section 1 : Architecture of the Application
+## Section 1 : Conception of the application
 
-### Subsection 1.1 : Class Diagram
+### Subsection 1.1 Cahier des charges
+
+
+### Subsection 1.2 Conception's choices
+
+
+### Subsection 1.3 Description des fonctionnalités
+
+
+### Subsection 1.4 Organisation du groupe
+
+
+### subsection 1.5 Organisation du travail
+
+
+
+## Section 2 : Architecture of the Application
+
+
+### Subsection 2.1 Case use diagram
+
+
+### Subsection 2.2 Activity diagram
+
+
+### Subsection 2.3 Physical data model
+
+![Physical data model](img/data_model.png)
+
+The physical data model represents the different databases used to operate the application. Each table stores a specific object. The tables are linked to one another through a primary key/foreign key system. The cardinalities are directly indicated on the diagram.
+
+The two main objects in this application are users and asteroids, the latter also forming the core of the physical data model. The “NEO” table depends directly on NASA’s API, whereas the “User” table stores information (pseudo, password, email,...) about the different users registered on the application.
+
+The favourites and alerts are stored in separate tables so that they are not lost each time the data is refreshed through the API. These two tables also establish the link between users and the asteroids. The other tables store the information required to implement the functionalities specified in the requirements.
+
+For example, the requirements state: “For each favourite NEO, a history of its distance from Earth must be maintained.” We therefore need a “NeoDistanceHistory” table linked to the “Neo” table, which stores pairs of values consisting of a date and a distance. We choose the type of "distance" to be float because it is easier to build statistics then.
+
+Another functionality that requires additional data tables is the history feature. We need to store all queries in a database, along with the corresponding user and the date on which the query was made. To achieve this, we defined two data tables: one for the search history (“SearchHistory”) and the other for the users’ connection history (“ConnectionLog”).
+
+
+### Subsection 2.4 : Class Diagram
 [Conceptual conception of the application Neo-Watch ]{.underline}\
 
 Neo-Watch is an application dedicated to the monitoring of Near Earth Objects (NEOs). Its purpose is to let people search and follow NEOs, keep track on how their distance to Earth changes over time, and be alerted immediately when an object comes close to Earth. To manage access rights and demanded features in the application, we will separate administrators who are given extra rights to manage the platform itself (accounts, connection history, and the underlying NEO database) from common users, called visitors in this architecture. 
@@ -82,41 +122,24 @@ Every User can define one or more Alert entries, each one relying on a condition
 
  
 
-### Subsection 1.2 : Package Diagram 
+### Subsection 2.5 : Package Diagram 
 
 The following package diagram is meant to explain and describe, as precisely as possible, how the layers communicate and enable our application to function. Every request sent by a User, whether a Visitor or an Administrator, is handled through the API and its endpoints, which contact the Controller. The user has access to several actions, which are translated into methods in the Controller layer. Once a request is received, the Controller passes it to the Service layer, which relies on a separate Business package containing the classes built to handle the request's business logic. When the action has been processed, the DAO is used to query the database and retrieve the results. This data then flows back up through the chain it went through, Service layer and the Controller, which returns it to the User via the API. The DAO is the only layer in direct contact with the database (edited by NASA) so the results have to comme back in the said precedent order. 
 Finally, you may observe that a Test addition is to be found in the upper right side of our diagram. Indeed, it represents the process of testing and checking whether our application functions correctly.
 
-![Pacakge Diagram of the application](img/Diagramme_de_package.png.png)
-{{< pagebreak >}}
-
-## Section 2
-
-2.4 Physical data model
-
-The physical data model represents the different databases used to operate the application. Each table stores a specific object. The tables are linked to one another through a primary key/foreign key system. The cardinalities are directly indicated on the diagram.
-
-The two main objects in this application are users and asteroids, the latter also forming the core of the physical data model. The “NEO” table depends directly on NASA’s API, whereas the “User” table stores information (pseudo, password, email,...) about the different users registered on the application.
-
-The favourites and alerts are stored in separate tables so that they are not lost each time the data is refreshed through the API. These two tables also establish the link between users and the asteroids. The other tables store the information required to implement the functionalities specified in the requirements.
-
-For example, the requirements state: “For each favourite NEO, a history of its distance from Earth must be maintained.” We therefore need a “NeoDistanceHistory” table linked to the “Neo” table, which stores pairs of values consisting of a date and a distance. We choose the type of "distance" to be float because it is easier to build statistics then.
-
-Another functionality that requires additional data tables is the history feature. We need to store all queries in a database, along with the corresponding user and the date on which the query was made. To achieve this, we defined two data tables: one for the search history (“SearchHistory”) and the other for the users’ connection history (“ConnectionLog”).
-
-{{< pagebreak >}}
-
-## Bibliography
+![Package Diagram of the application](img/Diagramme_de_package.png.png)
 
 
 {{< pagebreak >}}
 
 ## Conclusion {.unnumbered}
 
+{{< pagebreak >}}
+
+## Bibliography
 
 {{< pagebreak >}}
 
 ## Annexes {.unnumbered}
-
 
 {{< pagebreak >}}
