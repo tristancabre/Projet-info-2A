@@ -82,8 +82,9 @@ Every User can define one or more Alert entries, each one relying on a condition
 
  
 
-### Subsection 1.2
+### Subsection 1.2 : Package Diagram 
 
+The following package diagram is meant to explain and describe, as precisely as possible, how the layers communicate and enable our application to function. Every request sent by a User, whether a Visitor or an Administrator, is handled through the API and its endpoints, which contact the Controller. The user has access to several actions, which are translated into methods in the Controller layer. Once a request is received, the Controller passes it to the Service layer, which relies on a separate Business package containing the classes built to handle the request's business logic. When the action has been processed, the DAO is used to query the database and retrieve the results. This data then flows back up through the chain it went through, Service layer and the Controller, which returns it to the User via the API. The DAO is the only layer in direct contact with the database (edited by NASA) so the results have to comme back in the said precedent order. 
 {{< pagebreak >}}
 
 ## Section 2
