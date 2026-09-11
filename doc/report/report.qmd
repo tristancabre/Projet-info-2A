@@ -20,11 +20,11 @@ format:
 #import "model.typ": project_template
 
 #show: body => project_template(
-  title: [Créer un rapport de projet\ avec Quarto et Typst],
-  team: [Équipe 8],
-  authors: ([Jean-Guy Badiane], [Serena Williams], [François Pignon], [Anne Hathaway]),
-  tutor: [Philippe Lucas],
-  project: [Projet Statistique de 1ère année - Année 2025-2026],
+  title: [Report on the NEO - Watch Project],
+  team: [Équipe 7],
+  authors: ([Tristan Cabre], [Gabrielle Causse], [Albane Krob], [Noé Chauvin]),
+  tutor: [M. Ricciardi],
+  project: [Projet Informatique de 2ème année - Année 2026-2027],
   body
 )
 ```
