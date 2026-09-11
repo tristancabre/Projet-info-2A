@@ -18,59 +18,59 @@ classDiagram
     %% Business objects
 
     class User {
-        id_user_PK : int
-        pseudo : varchar
-        password : varchar
-        email : varchar
+        id_user_PK : SERIAL
+        pseudo : VARCHAR
+        password : VARCHAR
+        email : VARCHAR
     }
 
     class Neo{
-        id_neo_PK : id
-        name : varchar
-        weight : int
-        size : int
-        distance : int
-        composition : varchar
-        closest_day : date
-        origin : varchar
-        rarity : int
+        id_neo_PK : SERIAL
+        name : VARCHAR
+        weight : INT
+        size : INT
+        distance : INT
+        composition : VARCHAR
+        closest_day : DATE
+        origin : VARCHAR
+        rarity : INT
     }
 
     class Alert {
-        id_alert_PK : int
-        #id_user : int
-        #id_neo : int | NULL
-        min_size : int | Null
-        max_size : int | Null
-        min_distance : int | Null
-        max_distance : int | Null
+        id_alert_PK : SERIAL
+        #id_user : SERIAL
+        #id_neo : SERIAL | NULL
+        min_size : INT | Null
+        max_size : INT | Null
+        min_distance : FLOAT | Null
+        max_distance : FLOAT | Null
     }
 
     class Favorites {
-        id_favorite_PK : int
-        #id_user : int
-        #id_neo : int
-        date_added : date
+        id_favorite_PK : SERIAL
+        #id_user : SERIAL
+        #id_neo : SERIAL
+        date_added : DATE
     }
 
     class ConnectionLog {
-        id_connection_PK : int
-        #id_user : int 
-        timestamp : timestamp
+        id_connection_PK : SERIAL
+        #id_user : SERIAL
+        timestamp : TIMESTAMP
     }
 
     class SearchHistory {
-        id_search_PK : int
-        #id_user : int
-        search_query : varchar
-        timestamp : timestamp
+        id_search_PK : SERIAL
+        #id_user : SERIAL
+        search_query : VARCHAR
+        timestamp : TIMESTAMP
     }
 
     class NeoDistanceHistory {
-        id_history_PK : int
-        #id_neo : int
-        distance : float
-        observation_date : date
+        id_history_PK : SERIAL
+        #id_neo : SERIAL
+        distance : FLOAT
+        observation_date : DATE
     }
 
 
@@ -80,7 +80,7 @@ classDiagram
     Neo "1" ..> "1" NeoDistanceHistory
     User "1" ..> "0.." ConnectionLog
     User "1" ..> "1" SearchHistory
-    User "1" ..> "0.." Favorites
+    User "1" ..> "1" Favorites
     User "1" ..> "0.." Alert
 
 ```
