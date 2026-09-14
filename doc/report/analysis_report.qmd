@@ -37,7 +37,7 @@ format:
 
 ## Conception of the application
 
-### Cahier des charges
+### Specifications
 
 NEO-Watch addresses a genuine planetary-defense concern by tracking Near-Earth Objects (asteroids and comets). Beyond this evocative framing, the project raises several concrete stakes. First, the application depends entirely on NASA's public API for its data, which makes data reliability and availability critical success factors: any downtime or inconsistency on NASA's side directly affects the quality of the service offered to users. Second, the system must guarantee data integrity across successive updates, since NEOs created manually by users (feature F4) must never be overwritten when the database is refreshed with new data from NASA — a non-trivial synchronization and versioning challenge. Third, NEO-Watch must serve two distinct audiences with different needs: casual users who simply want a quick overview through the dashboard and alerts, and more engaged users who will use advanced features such as favorites tracking, comparisons, or statistics; the interface and architecture must accommodate both without becoming complex. Finally, security and access control are important, since the application distinguishes between regular users and administrators and must protect personal data such as favorites, search history, and alert configurations, while also ensuring that time-sensitive alerts are computed and delivered promptly to remain useful.
 
@@ -51,7 +51,7 @@ The mandatory technology stack centers on Python, with FastAPI handling the back
 ### Conception's choices
 
 
-### Description des fonctionnalités
+### Feature description
 
 
 ### Group organisation
@@ -69,7 +69,7 @@ Finally, we aim to complete the main part of the project approximately one week 
 We believe that this organization will contribute to the success of our project by helping us stay motivated, work efficiently, and remain a cohesive team.
 
 
-### Organisation du travail
+### Work organisation
 
 
 
@@ -155,4 +155,4 @@ Finally, you may observe that a Test addition is to be found in the upper right 
 {{< pagebreak >}}
 
 
-## Annexes {.unnumbered}
+## Appendices {.unnumbered}
