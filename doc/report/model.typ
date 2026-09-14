@@ -8,7 +8,7 @@
     block(above: 2em, below: 1em, it)
   }
 
-  set bibliography(title: [Bibliographie], full: true)
+  set bibliography(title: [Bibliography], full: true)
 
   body
 }
@@ -32,11 +32,11 @@
     columns: (1fr, 1fr),
     align: (left, right),
     [
-      *Étudiants :* \
+      *Students :* \
       #authors.map(a => [#a]).join("\n")
     ],
     [
-      *Encadrant :* \
+      *Tutor :* \
       #tutor
     ]
   )
@@ -67,7 +67,7 @@
   // Table of contents
   pagebreak()
   set page(fill: none, margin: auto)
-  align(horizon, outline(indent: auto, title: [Table des matières]))
+  align(horizon, outline(indent: auto, title: [Table of contents]))
 
   // Page numbering begins after the table of contents
   pagebreak()
