@@ -48,7 +48,19 @@ format:
 ### Subsection 1.3 Description des fonctionnalités
 
 
-### Subsection 1.4 Organisation du groupe
+### Subsection 1.4 Group organisation
+
+The Gantt chart below represents the work that we plan to accomplish throughout the duration of the project. We decided to divide the project into three main phases: analysis, development and programming, and report writing and oral presentation preparation. This schedule is not intended to be followed to the letter, but rather to provide the group with a general framework for organizing and distributing the workload. It should help us avoid overloading, particularly towards the end of the project or during periods when we have exams. For this reason, we have decided to maintain a steady pace throughout the project. 
+
+Dividing the tasks required to successfully complete the project among the four members of the group is essential to keep track of our progress and deadlines. It is also a way to ensure a balanced distribution of the workload in the group. This organization should also make it easier to identify the tasks that have been completed and those that still need to be addressed and upgraded. 
+
+Furthermore, the immersion days will provide us with additional opportunities to make significant progress on the project. During these days, we will be able to complete an important part of the planned work, work together more efficiently, or focus on specific issues that may require further discussion and attention. These periods of more intensive group work should help us to be up to date with our own schedule. 
+
+The report will be written progressively throughout the project. Nevertheless, most of the writing will take place during the last few weeks. Indeed, we will need to have a complete overview of the application before we can provide a detailed description of our work and explanations of the technical decisions we made. This will also allow us to include relevant explanations concerning any difficulties or technical issues encountered during the development process, as well as the solutions we implemented to correct them. 
+
+Finally, we aim to complete the main part of the project approximately one week before the final submission deadline. This period should give us enough time to review and test the application, finalize the report, prepare the oral presentation, and make any necessary corrections. It should also reduce the risk of having to complete a large amount of work at the last minute and being caught off guard. 
+
+We believe that this organization will contribute to the success of our project by helping us stay motivated, work efficiently, and remain a cohesive team.
 
 
 ### subsection 1.5 Organisation du travail
