@@ -21,7 +21,7 @@ format:
 
 #show: body => project_template(
   title: [Analysis Report on the NEO-Watch Project],
-  team: [Équipe 7],
+  team: [Team 7],
   authors: ([Tristan Cabre], [Gabrielle Causse], [Albane Krob], [Noé Chauvin]),
   tutor: [M. Ricciardi],
   project: [2nd-Year Computer Science Project – 2026–2027 Academic Year],

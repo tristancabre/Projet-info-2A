@@ -20,11 +20,11 @@ format:
 #import "model.typ": project_template
 
 #show: body => project_template(
-  title: [Report on the NEO - Watch Project],
-  team: [Équipe 7],
+  title: [Report on the NEO-Watch Project],
+  team: [Team 7],
   authors: ([Tristan Cabre], [Gabrielle Causse], [Albane Krob], [Noé Chauvin]),
   tutor: [M. Ricciardi],
-  project: [Projet Informatique de 2ème année - Année 2026-2027],
+  project: [2nd-Year Computer Science Project – 2026–2027 Academic Year],
   body
 )
 ```
