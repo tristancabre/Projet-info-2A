@@ -104,7 +104,7 @@ We believe that this organization will contribute to the success of our project 
 
 ### Activity diagram
 
-![Activity diagramm](img/Activity_diagramm.png)
+![Activity diagramm](img/Activity_diagramm.png){width=90%}
 
 
 ### Physical data model
