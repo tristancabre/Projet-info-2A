@@ -440,7 +440,7 @@ Finally, we aim to complete the main part of the project approximately one week 
 We believe that this organization will contribute to the success of our project by helping us stay motivated, work efficiently, and remain a cohesive team.
 
 #figure([
-#box(image("img/Gantt_diagramm.png", width: 90.0%))
+#box(image("img/Gantt_diagramm.png"))
 ], caption: figure.caption(
 position: bottom, 
 [
