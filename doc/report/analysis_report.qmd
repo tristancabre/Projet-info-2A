@@ -20,7 +20,7 @@ format:
 
 #show: body => project_template(
   title: [Analysis Report on the NEO-Watch Project],
-  team: [Team 7],
+  team: [Group 7],
   authors: ([Tristan Cabre], [Gabrielle Causse], [Albane Krob], [Noé Chauvin]),
   tutor: [M. Ricciardi],
   project: [2nd-Year Computer Science Project – 2026–2027 Academic Year],
@@ -90,7 +90,7 @@ Finally, we aim to complete the main part of the project approximately one week 
 
 We believe that this organization will contribute to the success of our project by helping us stay motivated, work efficiently, and remain a cohesive team.
 
-![Gantt diagramm](img/Gantt_diagram.png)
+![Gantt diagramm](img/Gantt_diagram.png){width=130%}
 
 ### Work organisation
 
