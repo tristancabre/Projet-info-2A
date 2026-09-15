@@ -103,8 +103,15 @@ We believe that this organization will contribute to the success of our project 
 ![Case use diagram](img/case_use_diagram.png)
 
 ### Activity diagram
+The next step carried out was designing the activity diagram. It models the use cases within the application and illustrates the various choices available to the user.
 
 ![Activity diagramm](img/Activity_diagramm.png){width=90%}
+
+Upon launching the application, the user must authenticate: they either create a new account or log in with their existing credentials. Next, they are routed based on their account type:
+
+-Regular User: Several actions meeting the project specifications are available. The user can create, view, and modify their list of favorite NEOs, search for a specific NEO using the search bar, and add it to or remove it from this list. They also have the option to export the relevant information. Furthermore, the specifications require a feature enabling the user to manually create a NEO and save it to the database, provided the submitted data format is valid. Finally, the user can log out and terminate their session.
+
+-Administrator: The administrator can manage user accounts by deleting them if necessary and reviewing their login history. Additionally, the administrator's role includes updating data from NASA without overwriting user-submitted NEOs. Using a boolean flag, records retrieved from NASA's API are updated while manual entries are preserved as they are. Finally, just like a regular user, the administrator can log out at the end of their session.
 
 
 ### Physical data model
