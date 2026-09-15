@@ -75,6 +75,16 @@ Finally, this range of features will require reliable access to the database. We
 
 ### Feature description
 
+Beyond the formal list of functionalities given in the specifications, it is useful to describe how a user actually moves through NEO-Watch, screen by screen, since this is what ultimately determines whether the application feels intuitive while following the features, both necessary and optional. The whole application is organised as a set of menus, each one giving access to a limited number of clearly identified actions, so that a user or an administrator is never more than a few clicks away from the feature they are looking for. 
+
+A first-time user lands on the Welcome screen, where the only choices are to log in, to register, or to leave the application. Registration simply asks for a login, a password and an email address, the latter being required since it is later used to deliver alert notifications. Once authenticated, the user is redirected to one of two dashboards depending on their role, both built on the same logic : a synthetic overview of the next close approaches, the number of potentially hazardous NEOs, the closest object over a chosen period, and, for Visitors, the highlights drawn from their own favorites together with any pending alert notification.
+
+From the visitor (user) dashboard, four main menus are reachable, each one directly implementing a mandatory feature. The menu to browse NEOs opens a search screen where the user filters by name, identifier, size or next passage date, sorts the results, and exports them if needed; selecting a result opens a screen with NEOs details, from which the object can be added to favorites or, echoing the "add informations" use case, completed with additional information. The menu to create a NEO offers a short form through which an observed object can be registered directly in the database. The favorites menu lists the user's watchlist, lets a NEO be removed from it, and gives access, for each entry, to a dedicated history screen where the evolution of the object's distance to Earth is plotted and can be exported as a graph. Finally, the alerts menu lets the user consult the active notification rules or define a new one, which will later be evaluated at each login.
+
+The administrator dashboard reuses the same overview but replaces the personal menus with the management tools. The menu to manage accounts lets an administrator browse the list of registered users and delete an account. The logs menu gives access to a chosen user's login history, and the menu to update the database triggers a synchronization with NASA's API while guaranteeing that user-created NEOs are preserved. In every case, whatever screen the user is on, a return path brings them back to their own dashboard, and logging out from either dashboard always leads back to the Welcome screen.
+
+![Menu diagram](img/Menu_diagram.png)
+
 
 ### Group organisation
 
