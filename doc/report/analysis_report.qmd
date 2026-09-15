@@ -1,5 +1,4 @@
 ---
-bibliography: refs.bib
 citeproc: false
 nocite: "@*"
 format:
@@ -101,8 +100,11 @@ We believe that this organization will contribute to the success of our project 
 
 ### Case use diagram
 
+![Case use diagram](img/case_use_diagram.png)
 
 ### Activity diagram
+
+![Activity diagramm](img/Activity_diagramm.png)
 
 
 ### Physical data model
@@ -176,6 +178,5 @@ Finally, you may observe that a Test addition is to be found in the upper right 
 ## Conclusion {.unnumbered}
 
 {{< pagebreak >}}
-
 
 ## Appendices {.unnumbered}
