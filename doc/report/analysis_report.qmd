@@ -50,6 +50,22 @@ The mandatory technology stack centers on Python, with FastAPI handling the back
 
 ### Conception's choices
 
+The functioning of the application had to be discussed within the group in order to make the best decisions and to justify our choices throughout the project. This document aims to summarize the main points debated so far, along with the reasoning behind each decision. 
+
+The first point of debate in the design of our application was the distinction between the two types of users. From the very beginning, we understood that having both Administrators and Visitors would be necessary, given the range of features to be implemented. 
+
+This distinction is needed because some services and mandatory features require internal access to information that ordinary users should not have access to, such as the connection history of other users, system logs, or usage statistics across all accounts. Allowing every user unrestricted access to this kind of data would compromise both the privacy of other users and the overall security of the application. 
+
+This is why an authentication controller is required. It must identify the user upon login and grant access to the appropriate personal interface and set of tools depending on their role. In practice, Administrators can be seen as regular visitors with extended rights, allowing them to manage the application (for example, checking user activity or auditing access to specific features), rather than as a completely separate category of user. 
+
+We decided to build the user interface with Streamlit. Instead of having Streamlit communicate directly with the database, we have to use FastAPI a backend API layer between the frontend and the data. Then, the path of a request will be as such : the Streamlit frontend calls the API, which forwards the request to a Controller, the Controller delegates the business logic to a Service layer which relies on a DAO (Data Access Object) to communicate with the database. This separation of concerns makes the application easier to maintain, test, and extend, since each layer has a single, well-defined responsibility. 
+
+Through this interface, users will be able to browse the database and search for NEOs (Near-Earth Objects) using filters such as name, date, and composition of the asteroid. They will also be able to build a list of favourites among their searches and receive alerts when a NEO is approaching Earth. In addition, the application will allow users to generate summary statistics and export graphs in response to specific requests, giving them a way to visualize and analyze the data that matters to them. 
+
+To distinguish between visitors and administrators, we plan to use a boolean codification (add in an is_admin field) associated with each user account. This flag will be checked at the Controller level to determine whether a given request should be authorized, ensuring that sensitive endpoints (such as those exposing other users’ connection history) remain restricted to Administrators only. 
+
+Finally, this range of features will require reliable access to the database. We will use PostgreSQL for storage. Rather than allowing each layer or each user session to open its own direct connection, access to the database will be centralized through the DAO layer, using a connection pool. This will help avoid conflicting access, while still allowing multiple users to use the application simultaneously.
+
 
 ### Feature description
 
