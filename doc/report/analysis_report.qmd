@@ -30,7 +30,7 @@ format:
 
 ## Introduction {.unnumbered}
 
-  Who has never watched shooting stars in the sky as a kid, wondering what they were and where they came from ? By growing up, we all learned that theses beatiful lights were due to the high-speed dust of meteorite coming in the atmosphere, before it inevitably destroy it. However, what would happen if it was not just the dust of the meteorit, but the meteorit itself which was coming straight to us through the atmosphere ? Wouldn't we like to know ? And if we do, could we avoid it ? At least, we know that the dinosaurs didn't ask themselves this question…
+  Who has never watched shooting stars in the sky as a kid, wondering what they were and where they came from ? Growing up, we all learned that theses beautiful lights were due to the high-speed dust of meteorite coming in the atmosphere, before it inevitably destroy it. However, what would happen if it was not just the dust of the meteorit, but the meteorit itself which was coming straight to us through the atmosphere ? Wouldn't we like to know ? And if we do, could we avoid it ? At least, we know that the dinosaurs didn't ask themselves this question…
 
   As humanity was a little more concerned about these small Solar System bodies than its predecessors on Earth, the US government tasked NASA with cataloguing 90% of Near-Earth Objects (NEOs) with a diameter greater than 1 km within ten years. Additionally, in 2016, NASA was asked not only to list the threats, but also to create a solution in case of an unavoidable collision trajectory. With this in mind, NASA launched the space mission DART (Double Asteroid Redirection Test) in 2022, resulting in a success by significantly changing the trajectory of the small asteroid Dimorphos. 
    
