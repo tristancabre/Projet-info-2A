@@ -31,6 +31,6 @@ class User:
     def as_list(self) -> list[str]:
         """Returns the player's key attributes as a list.
         Returns:
-            list[str]: A list containing [username, elo, email, pokemon_fan].
+            list[str]: A list containing [pseudo, mail].
         """
         return [self.pseudo, self.email]
