@@ -104,7 +104,7 @@ We believe that this organization will contribute to the success of our project 
 
 ### Activity diagram
 
-![Activity diagramm](img/Activity_diagramm.png)
+![Activity diagramm](img/Activity_diagramm.png){width=90%}
 
 
 ### Physical data model
@@ -160,7 +160,7 @@ A User can build a personal list of favourite NEOs through the Favourites class.
 Every User can define one or more Alert entries, each one relying on a condition to trigger the notification. 
 
  
-![UML diagram](img/UML_diagram.png.png)
+![UML diagram](img/UML_diagram.png)
  
 
  
