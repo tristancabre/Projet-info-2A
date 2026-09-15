@@ -90,7 +90,7 @@ Finally, we aim to complete the main part of the project approximately one week 
 
 We believe that this organization will contribute to the success of our project by helping us stay motivated, work efficiently, and remain a cohesive team.
 
-![Gantt diagramm](img/Gantt_diagramm.png){width=90%}
+![Gantt diagramm](img/Gantt_diagramm.png)
 
 ### Work organisation
 
