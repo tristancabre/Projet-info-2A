@@ -30,7 +30,7 @@ format:
 
 ## Introduction {.unnumbered}
 
-  Who has never watched shooting stars in the sky as a kid, wondering what they were and where they came from ? Growing up, we all learned that theses beautiful lights were due to the high-speed dust of meteorite coming in the atmosphere, before it inevitably destroy it. However, what would happen if it was not just the dust of the meteorit, but the meteorit itself which was coming straight to us through the atmosphere ? Wouldn't we like to know ? And if we do, could we avoid it ? At least, we know that the dinosaurs didn't ask themselves this question…
+  Who has never watched shooting stars in the sky as a kid, wondering what they were and where they came from ? Growing up, we all learned that theses beautiful lights were due to the high-speed dust of meteorite coming in the atmosphere, before it inevitably destroys it. However, what would happen if it was not just the dust of the meteorit, but the meteorit itself coming straight to us through the atmosphere ? Wouldn't we like to know ? And if we do, could we avoid it ? At least, we know that the dinosaurs didn't ask themselves this question…
 
   As humanity was a little more concerned about these small Solar System bodies than its predecessors on Earth, the US government tasked NASA with cataloguing 90% of Near-Earth Objects (NEOs) with a diameter greater than 1 km within ten years. Additionally, in 2016, NASA was asked not only to list the threats, but also to create a solution in case of an unavoidable collision trajectory. With this in mind, NASA launched the space mission DART (Double Asteroid Redirection Test) in 2022, resulting in a success by significantly changing the trajectory of the small asteroid Dimorphos. 
    
@@ -104,12 +104,18 @@ We believe that this organization will contribute to the success of our project 
 
 ### Work organisation
 
+Concerning the practical organisation of our work, we have a discussion group on WhatsApp that lets us exchange ideas and keep each other updated on the progress of our tasks. Beyond these day-to-day exchanges, we also hold regular meetings, both during the sessions scheduled for the project and, when needed, outside of them, to review what has been done, clarify the points that still need to be settled, and decide how to distribute the work that remains.
+
+A GitHub repository has also been set up: this allows us to work as efficiently as possible as a team. We can work simultaneously on the project and benefit from a simplified way of managing conflicts. This GitHub repository is essential for optimal collaboration, and it is also where we keep our diagrams, our Gantt chart and the report itself, so that every member can consult or modify them.
+
+Finally, this application will be developed in Python, mainly through the VS Code editor made available on ENSAI's Onyxia (SSP Cloud) platformt.
 
 
 ## Architecture of the Application
 
 
 ### Case use diagram
+The use case diagram summarizes, for both the user and administratoe identified in the specifications, the actions they are entitled to perform once the features are translated into concrete interactions. The user, once logged in, can exit the application, set an alert, manage their list of favorites (which includes removing a NEO that no longer interests them), and look up a NEO; this last use case is central to the application, since it is itself the entry point to two further actions, adding the object to favorites or, as an optional feature, adding information about it. Creating an account is also available to a non-authenticated user, as a prerequisite to logging in and reaching the rest of the menu. The administrator inherits every use case available to the user, since an administrator account can also browse NEOs, manage favorites or set alerts, and is additionally granted the use case of updating the data, a privileged action from which two further use cases branch out: accessing the login history of users and deleting an account. This inheritance relationship, already visible in the class diagram, is reflected here by the fact that the administrator actor is connected to all the use cases reachable by the Visitor in addition to their own, rather than by a duplicated set of unrelated actions.
 
 ![Case use diagram](img/case_use_diagram.png)
 
@@ -186,6 +192,11 @@ Finally, you may observe that a Test addition is to be found in the upper right 
 {{< pagebreak >}}
 
 ## Conclusion {.unnumbered}
+More than a technical exercise, this first phase turned out to be a good opportunity for the four of us to figure out how we each work best, and where we can lean on one another going forward. Some of us are more comfortable with the visual and structural side of things, others gravitate naturally toward writing and justifying choices in words; knowing this now means we can hand out the remaining work in a way that plays to everyone's strengths rather than splitting it evenly by default.
+
+It was also, for most of us, a first real encounter with several concepts that only existed as abstract terms before this project: what a Data Access Object actually does in practice, how a web service is meant to talk to a database... None of this was obvious at the start, but having gone through it once means we now have a working method we can rely on for the rest of the project.
+
+Above all, sitting down to think through the application before writing a single line of code gave the whole group a shared and precise mental picture of NEO-Watch, one that everyone can now build from without having to check with the others every step of the way. Whether that picture survives contact with the actual implementation is another question entirely, and it would not be surprising if some of the choices made here turn out to need revisiting; the final report will be the place to take stock of what changed and why.
 
 {{< pagebreak >}}
 
