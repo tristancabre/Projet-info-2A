@@ -151,8 +151,6 @@ The conceptual model is built directly from the class diagram of the application
 
 The domain classes are essential for this application. 
 
-#### Users 
-
 Every person who uses the application is represented by the class User, which represents what is common to all accounts: a pseudo, a password which is always stored hashed, thanks to the methods hash and check for the password. An email address is also stored and used to receive alerts. Two particular cases extend this class: 
 
 Visitor: This user is an ordinary visitor of the application. They can create an account, log in, save a password, build a list of favourite NEOs, receive notifications and search the database. 
@@ -161,21 +159,15 @@ Administrator: This particular user inherits everything a Visitor can do, and ad
 
 This inheritance relationship (User <- Visitor and Administrator). It could be said that an Administrator is a User with extended rights. 
 
-#### Near Earth Objects (NEO) 
-
 The class Neo represents a Near Earth Object, with its descriptive characteristics: name, weight, size, composition, rarity, origin, its closest recorded day, and a distance to Earth. This distance is not a fixed, it evolves over time as the object continues its trajectory in the NASA database, which is precisely why it is built so that there can be a mechanism to keep track of it. 
 
 The NeoDistanceHistory class enables to folow how a NEO's distance to Earth evolves after each update of the database. Each Neo should own exactly one NeoDistanceHistory object. It is a component of the Neo itself, responsible for recording the evolution of the distance to Earth. Internally, it keeps a list of records (a date to reference the distance to Earth) which will give the opporutnity for a User to reconstruct its evolution, approach or leave over time. 
 
 This design keeps a clean separation of concerns: the Neo class describes what the object is, while NeoDistanceHistory describes how its distance behaves through time which will be the information Favourites and Alert rely on. 
 
-#### Favourites 
-
 A User can build a personal list of favourite NEOs through the Favourites class. Each Favourites entry links one User to one Neo. 
 
-#### Alerts and Notifications 
-
-Every User can define one or more Alert entries, each one relying on a condition to trigger the notification. 
+Every User can define one or more Alert entries, each one relying on a condition to trigger the notification. Then, there are two classes Alert and Notification.
 
  
 ![UML diagram](img/UML_diagram.png){width=115%}
