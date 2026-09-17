@@ -106,6 +106,8 @@ We believe that this organization will contribute to the success of our project 
 
 Concerning the practical organisation of our work, we have a discussion group on WhatsApp that lets us exchange ideas and keep each other updated on the progress of our tasks. Beyond these day-to-day exchanges, we also hold regular meetings, both during the sessions scheduled for the project and, when needed, outside of them, to review what has been done, clarify the points that still need to be settled, and decide how to distribute the work that remains.
 
+Furthermore, in order to facilitate the completion of the project, we assigned each member of the group a specific role. Tristan is responsible for managing the writing of the report, Gabrielle is the tech lead, Albane is the group manager, and Noé oversees testing in the application.
+
 A GitHub repository has also been set up: this allows us to work as efficiently as possible as a team. We can work simultaneously on the project and benefit from a simplified way of managing conflicts. This GitHub repository is essential for optimal collaboration, and it is also where we keep our diagrams, our Gantt chart and the report itself, so that every member can consult or modify them.
 
 Finally, this application will be developed in Python, mainly through the VS Code editor made available on ENSAI's Onyxia (SSP Cloud) platformt.
