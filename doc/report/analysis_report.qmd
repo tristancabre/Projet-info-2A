@@ -197,7 +197,3 @@ More than a technical exercise, this first phase turned out to be a good opportu
 It was also, for most of us, a first real encounter with several concepts that only existed as abstract terms before this project: what a Data Access Object actually does in practice, how a web service is meant to talk to a database... None of this was obvious at the start, but having gone through it once means we now have a working method we can rely on for the rest of the project.
 
 Above all, sitting down to think through the application before writing a single line of code gave the whole group a shared and precise mental picture of NEO-Watch, one that everyone can now build from without having to check with the others every step of the way. Whether that picture survives contact with the actual implementation is another question entirely, and it would not be surprising if some of the choices made here turn out to need revisiting; the final report will be the place to take stock of what changed and why.
-
-{{< pagebreak >}}
-
-## Appendices {.unnumbered}
