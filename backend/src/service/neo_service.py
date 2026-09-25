@@ -25,10 +25,14 @@ class NeoService:
             if (min_diameter is None or n.diameter >= min_diameter) and (max_diameter is None or n.diameter <= max_diameter)
         ]
 
-    def search_by_composition(self, element: str) -> list[Neo]:
-        """Neos whose composition contains this element (case insensitive)."""
-        element = element.strip().lower()
-        return [n for n in self.neo_dao.find_all() if element in (c.lower() for c in n.composition)]
+    def search_by_speed(self, min_speed=None, max_speed=None) -> list[Neo]:
+        """Neos whose speed is contained between certain values."""
+        return [
+            n
+            for n in self.neo_dao.find_all()
+            if (min_speed is None or n.size >= min_speed) and
+            (max_speed is None or n.size <= max_speed)
+        ]
 
     def search_by_closest_day(self, day: date) -> list[Neo]:
         """Neos whose closest approach is exactly on this day."""
