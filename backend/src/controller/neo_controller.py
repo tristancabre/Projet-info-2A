@@ -8,10 +8,11 @@ class NeoReadModel(BaseModel):
 
     id_neo: int
     name: str
-    size: int
+    diameter: int
     distance: int
     composition: list[str]
     closest_day: date
+    speed: float
 
     # Allows building the model directly from a Neo business object
     model_config = {"from_attributes": True}

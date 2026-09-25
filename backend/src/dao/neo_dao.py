@@ -23,15 +23,16 @@ class NeoDao(metaclass=Singleton):
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "INSERT INTO neo(name, id_neo, size, distance, closest_day) VALUES "
-                        "(%(name)s, %(id_neo)s, %(size)s, %(distance)s, %(closest_day)s) "
+                        "INSERT INTO neo(name, id_neo, diameter, distance, closest_day, speed) VALUES "
+                        "(%(name)s, %(id_neo)s, %(diameter)s, %(distance)s, %(closest_day)s, %(speed)s) "
                         "RETURNING id_neo;",
                         {
                             "name": neo.name,
                             "id_neo": neo.id_neo,
-                            "size": neo.size,
+                            "diameter": neo.diameter,
                             "distance": neo.distance,
                             "closest_day": neo.closest_day,
+                            "speed": neo.speed
                         },
                     )
                     res = cursor.fetchone()
@@ -72,10 +73,11 @@ class NeoDao(metaclass=Singleton):
         if res:
             neo = Neo(
                 name=res["name"],
-                size=res["size"],
+                diameter=res["diameter"],
                 distance=res["distance"],
                 closest_day=res["closest_day"],
-                id_neo=res["id_neo"]
+                id_neo=res["id_neo"],
+                speed=res["speed"]
             )
 
         return neo
@@ -107,10 +109,11 @@ class NeoDao(metaclass=Singleton):
             neo = Neo(
                 name=res["name"],
                 id_neo=res["id_neo"],
-                size=res["size"],
+                diameter=res["diameter"],
                 distance=res["distance"],
                 composition=res["composition"],
                 closest_day=res["closest_day"],
+                speed=res["speed"]
             )
 
         return neo
@@ -142,9 +145,10 @@ class NeoDao(metaclass=Singleton):
                 neo = Neo(
                     id_neo=row["id_neo"],
                     name=row["name"],
-                    size=row["size"],
+                    diameter=row["diameter"],
                     distance=row["distance"],
                     closest_day=row["closest_day"],
+                    speed=row["speed"]
                 )
 
                 neos_list.append(neo)
@@ -167,16 +171,18 @@ class NeoDao(metaclass=Singleton):
                     cursor.execute(
                         "UPDATE neo                                                  "
                         "   SET name = %(name)s,                                "
-                        "       size = %(size)s,                                          "
+                        "       diameter = %(diameter)s,                                          "
                         "       distance = %(distance)s,                                      "
-                        "       closest_day = %(closest_day)s,                          "
+                        "       closest_day = %(closest_day)s,                        "
+                        "       speed = %(speed)s,                       "
                         " WHERE id_neo = %(id_neo)s;                              ",
                         {
                             "name": neo.name,
-                            "size": neo.size,
+                            "diameter": neo.diameter,
                             "distance": neo.distance,
                             "closest_day": neo.closest_day,
                             "id_neo": neo.id_neo,
+                            "speed": neo.speed
                         },
                     )
                     nb_affected_rows = cursor.rowcount
