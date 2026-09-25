@@ -4,7 +4,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from schema.user_model import UserModel, UserReadModel
-from service.player_service import PlayerService
+from service.user_service import UserService
 from utils.log_utils import get_logger
 
 router = APIRouter()
@@ -14,35 +14,35 @@ logger = get_logger(__name__)
 
 def get_player_service():
     """Dependency Injection provider for PlayerService."""
-    return PlayerService()
+    return UserService()
 
 
 @router.get("/", response_model=list[UserReadModel], tags=["Players"])
-async def find_all_players(player_service=Depends(get_player_service)):
+async def find_all_players(user_service=Depends(get_player_service)):
     """List all players.
     Returns:
         list[UserReadModel]: A list of all registered players.
     """
     logger.info("List all players")
-    players_list = player_service.find_all()
+    players_list = user_service.find_all()
     return players_list
 
 
-@router.get("/{id_player}", response_model=UserReadModel, tags=["Players"])
-async def player_by_id(id_player: int, player_service=Depends(get_player_service)):
+@router.get("/{id_user}", response_model=UserReadModel, tags=["Users"])
+async def player_by_id(id_user: int, user_service=Depends(get_player_service)):
     """Find a player by their unique ID.
     Args:
-        id_player (int)
-        player_service (PlayerService): The service used to interact with player data
+        id_user (int)
+        user_service (PlayerService): The service used to interact with player data
     Returns:
         UserReadModel: The player data if found
     Raises:
         HTTPException: 404 error if the player is not found
     """
     logger.info("Find a player by id")
-    player = player_service.find_by_id(id_player)
+    player = user_service.find_by_id(id_user)
     if not player:
-        raise HTTPException(status_code=404, detail="Player (id={id_player}) not found.")
+        raise HTTPException(status_code=404, detail="Player (id={id_user}) not found.")
     return player
 
 

@@ -1,6 +1,7 @@
 import secrets
 
 from business_object.player import Player
+
 from dao.player_dao import PlayerDao
 from utils.log_utils import log
 from utils.security import hash_password
