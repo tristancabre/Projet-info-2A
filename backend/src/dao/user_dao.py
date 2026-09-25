@@ -1,9 +1,12 @@
 from business_object import User
 from dao.db_connection import DBConnection
-from utils.log_utils import log
+from utils.log_utils import get_logger, log
+from utils.singleton import Singleton
+
+logger = get_logger(__name__)
 
 
-class UserDao:
+class UserDao(metaclass=Singleton):
     """Data access for users.no hashing of the pwd needed here"""
 
     @log
@@ -57,7 +60,7 @@ class UserDao:
         user = None
         if res:
             user = User(
-                id_player=res["id_player"],
+                id_user=res["id_user"],
                 username=res["username"],
                 email=res["email"],
                 password=res["password"],
@@ -69,9 +72,42 @@ class UserDao:
         pass
         # To be done late
 
+    @log
     def update(self, user: User) -> bool:
-        pass
-        # To be done late
+        """Update a user in the database.
+        Args:
+            user to be updated
+        Returns:
+            True if update is successful, False if unsuccessful
+        """
+        nb_affected_rows = 0
+
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "UPDATE user                                                  "
+                        "   SET username = %(username)s,                                "
+                        "       password = COALESCE(%(password)s, password),            "
+                        "       email = %(email)s,                                      "
+                        "       access_token = COALESCE(%(access_token)s, access_token) "
+                        " WHERE id_user = %(id_user)s;                              ",
+                        {
+                            "username": user.username,
+                            "password": user.password,
+                            "elo": user.elo,
+                            "email": user.email,
+                            "pokemon_fan": user.pokemon_fan,
+                            "access_token": user.access_token,
+                            "id_user": user.id_user,
+                        },
+                    )
+                    nb_affected_rows = cursor.rowcount
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        return nb_affected_rows == 1
 
     def delete(self, user: User) -> bool:
         pass
@@ -102,7 +138,7 @@ class UserDao:
         user = None
         if res:
             user = User(
-                id_player=res["id_player"],
+                id_user=res["id_user"],
                 username=res["username"],
                 email=res["email"],
                 password=res["password"],
