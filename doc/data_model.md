@@ -30,8 +30,8 @@ classDiagram
         diameter : INT
         distance : FLOAT
         speed : FLOAT
+        magnitude : FLOAT
         closest_day : DATE
-        origin : VARCHAR
         rarity : INT
     }
 
