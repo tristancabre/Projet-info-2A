@@ -13,7 +13,7 @@ class NeoDistanceHistory:
         self.observation_date = observation_date
         self.distance = distance
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"NeoDistanceHistory(id={self.id_history}, neo={self.id_neo}, date={self.observation_date}, distance={self.distance})"
 
     def as_list(self) -> list:
