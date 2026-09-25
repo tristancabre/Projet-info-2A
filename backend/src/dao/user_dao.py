@@ -35,6 +35,8 @@ class UserDao(metaclass=Singleton):
         created = False
         if res:
             user.id_user = res["id_user"]
+            created = True
+        return created
 
     def find_by_username(self, username: str) -> User | None:
         """Find a user by their username.
@@ -69,8 +71,33 @@ class UserDao(metaclass=Singleton):
         return user
 
     def list_all(self) -> list[User]:
-        pass
-        # To be done late
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT *                                "
+                        "  FROM user                           "
+                        " ORDER BY username;                     "
+                    )
+                    res = cursor.fetchall()
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        users_list = []
+
+        if res:
+            for row in res:
+                user = User(
+                    id_user=row["id_user"],
+                    username=row["username"],
+                    password=row["password"],
+                    email=row["email"],
+                )
+
+                users_list.append(user)
+
+        return users_list
 
     @log
     def update(self, user: User) -> bool:
@@ -90,15 +117,11 @@ class UserDao(metaclass=Singleton):
                         "   SET username = %(username)s,                                "
                         "       password = COALESCE(%(password)s, password),            "
                         "       email = %(email)s,                                      "
-                        "       access_token = COALESCE(%(access_token)s, access_token) "
                         " WHERE id_user = %(id_user)s;                              ",
                         {
                             "username": user.username,
                             "password": user.password,
-                            "elo": user.elo,
                             "email": user.email,
-                            "pokemon_fan": user.pokemon_fan,
-                            "access_token": user.access_token,
                             "id_user": user.id_user,
                         },
                     )
@@ -109,9 +132,28 @@ class UserDao(metaclass=Singleton):
 
         return nb_affected_rows == 1
 
+    @log
     def delete(self, user: User) -> bool:
-        pass
-        # To be done late
+        """Delete a user from the database.
+        Args:
+            User to delete from the database
+        Returns:
+            True if the user was successfully deleted, False if unsuccessfully
+        """
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "DELETE FROM user                               "
+                        " WHERE id_user = %(id_user)s                 ",
+                        {"id_user": user.id_user},
+                    )
+                    res = cursor.rowcount
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        return res > 0
 
     @log
     def find_by_id(self, id_user: int) -> User:
