@@ -18,14 +18,14 @@ CREATE TABLE project.user (
 
 DROP TABLE IF EXISTS project.neo CASCADE;
 CREATE TABLE project.neo (
-    id_neo  SERIAL PRIMARY KEY,
-    name    VARCHAR(255),
-    size    INT,
+    id_neo      SERIAL PRIMARY KEY,
+    name        VARCHAR(255),
+    size        INT,
     distance    INT,
-    composition VARCHAR(255),
+    speed       FLOAT,
     closest_day DATE,
-    origin  VARCHAR(255),
-    rarity  INT
+    origin      VARCHAR(255),
+    rarity      INT
 );
 
 -----------------------------------------------------
@@ -49,10 +49,12 @@ CREATE TABLE project.alert (
     id_alert SERIAL PRIMARY KEY,
     id_user INTEGER REFERENCES project.user(id_user),
     id_neo INTEGER REFERENCES project.neo(id_neo),
-    min_size    INT | NULL,
-    max_size    INT | NULL,
-    min_distance   INT | NULL,
-    max_distance    INT | NULL
+    min_size    INT,
+    max_size    INT,
+    min_distance   INT,
+    max_distance   INT,
+    min_speed    INT,
+    max_speed    INT
 );
 
 -----------------------------------------------------

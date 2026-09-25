@@ -1,4 +1,4 @@
-INSERT INTO user(username, password, email) VALUES
+INSERT INTO project.user(username, password, email) VALUES
 ('admin',     '0000',  'admin@project.io'),
 ('a',         'a'   ,  'a@ensai.fr'),
 ('maurice',   '1234',  'maurice@ensai.fr'),
