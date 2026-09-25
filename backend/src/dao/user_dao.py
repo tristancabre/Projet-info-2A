@@ -9,15 +9,18 @@ class UserDao:
         Must fill user.id_user if the database generates it."""
         # To be done late
 
-    def find_by_pseudo(self, pseudo: str) -> User | None:
+    def find_by_username(self, username: str) -> User | None:
         """Returns the user (Administrator or Visitor), or None if not found."""
         # To be done late
 
     def list_all(self) -> list[User]:
+        pass
         # To be done late
 
     def update(self, user: User) -> bool:
+        pass
         # To be done late
 
     def delete(self, user: User) -> bool:
+        pass
         # To be done late

@@ -1,14 +1,12 @@
 -----------------------------------------------------
--- Player
+-- User
 -----------------------------------------------------
-DROP TABLE IF EXISTS player CASCADE;
-CREATE TABLE player (
+DROP TABLE IF EXISTS user CASCADE;
+CREATE TABLE user (
     id_player    SERIAL PRIMARY KEY,
     username     VARCHAR(30) UNIQUE,
     password     VARCHAR(256),
-    elo          INTEGER,
     email        VARCHAR(50),
-    pokemon_fan  BOOLEAN,
     access_token VARCHAR(255)
 );
 

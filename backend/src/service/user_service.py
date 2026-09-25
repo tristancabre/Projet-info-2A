@@ -22,22 +22,22 @@ class UserService:
         if not any(c in string.punctuation for c in password):
             raise ValueError("The password has to contain at least one special character.")
 
-    def username_already_used(self, pseudo: str) -> bool:
-        """True if a user with this pseudo already exists."""
-        return self.user_dao.find_by_pseudo(pseudo) is not None
+    def username_already_used(self, username: str) -> bool:
+        """True if a user with this username already exists."""
+        return self.user_dao.find_by_username(username) is not None
 
     @log
-    def create(self, pseudo: str, password: str, email: str, is_admin: bool = False) -> User:
-        if self.username_already_used(pseudo):
-            raise ValueError("pseudo already used")
+    def create(self, username: str, password: str, email: str, is_admin: bool = False) -> User:
+        if self.username_already_used(username):
+            raise ValueError("username already used")
 
         self.validate_password(password)
         hashed = User.hash_password(password)  # tackled in the business object part of User
 
         if is_admin:  # Thanks to the bool (True) in the user.py
-            user = Administrator(pseudo, hashed, email, admin_name=pseudo)
+            user = Administrator(username, hashed, email, admin_name=username)
         else:
-            user = Visitor(pseudo, hashed, email, visitor_name=pseudo)
+            user = Visitor(username, hashed, email, visitor_name=username)
 
         self.user_dao.create(user)
         return user
@@ -47,9 +47,9 @@ class UserService:
         return self.user_dao.list_all()
 
     @log
-    def find_by_pseudo(self, pseudo: str) -> User | None:
-        """Returns the user with this pseudo, or None."""
-        return self.user_dao.find_by_pseudo(pseudo)
+    def find_by_username(self, username: str) -> User | None:
+        """Returns the user with this username, or None."""
+        return self.user_dao.find_by_username(username)
 
     @log
     def find_by_id(self, id_user: int) -> User | None:
@@ -62,18 +62,18 @@ class UserService:
         return self.user_dao.find_by_id(id_user)
 
     @log
-    def login(self, pseudo: str, password: str) -> User:
-        user = self.user_dao.find_by_pseudo(pseudo)
+    def login(self, username: str, password: str) -> User:
+        user = self.user_dao.find_by_username(username)
         if user is None or not user.check_password(password):
-            raise ValueError("pseudo or password incorrect, try again")
+            raise ValueError("username or password incorrect, try again")
         return user
 
     @log
     def update(self, user: User, new_password: str | None = None) -> User:
         """Updates a user. If update a password, it is validated then hashed."""
-        other = self.user_dao.find_by_pseudo(user.pseudo)
+        other = self.user_dao.find_by_username(user.username)
         if other is not None and other.id_user != user.id_user:
-            raise ValueError("Pseudo already used, find something else")
+            raise ValueError("username already used, find something else")
 
         if new_password is not None:
             self.validate_password(new_password)
