@@ -29,7 +29,7 @@ class RegularUser(User):
 
     @property
     def is_admin(self) -> bool:
-        """Distinguish roles for different Users : Fase pour Visitors"""
+        """Distinguish roles for different Users : Fase for Visitors"""
         return False
 
 
@@ -40,6 +40,6 @@ class Administrator(User):
 
     @property
     def is_admin(self) -> bool:
-        """Distinguish roles for different Users : TRUE pour Administrators."""
+        """Distinguish roles for different Users : TRUE for Administrators."""
 
         return True
