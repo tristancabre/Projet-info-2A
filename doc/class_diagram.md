@@ -18,8 +18,9 @@ Pour afficher ce diagramme dans VScode :
 classDiagram
     %% Business objects
 
-    class User {
-        -pseudo: string
+    class User(ABC) {
+        -id_user: int
+        -username: string
         -password: string
         -email: string
         +hash_password(plain_password: str) str

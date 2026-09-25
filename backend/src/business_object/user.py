@@ -3,8 +3,9 @@ from abc import ABC, abstractmethod
 
 
 class User(ABC):
-    def __init__(self, pseudo: str, password: str, email: str):
-        self.pseudo = pseudo
+    def __init__(self, id_user: int, username: str, password: str, email: str):
+        self.id_user = id_user
+        self.username = username
         self.password = password
         self.email = email
 
@@ -22,8 +23,8 @@ class User(ABC):
 
 
 class RegularUser(User):
-    def __init__(self, pseudo: str, password: str, email: str, visitor_name: str):
-        super().__init__(pseudo, password, email)
+    def __init__(self, id_user: int, username: str, password: str, email: str, visitor_name: str):
+        super().__init__(id_user, username, password, email)
         self.visitor_name = visitor_name
 
     @property
@@ -33,8 +34,8 @@ class RegularUser(User):
 
 
 class Administrator(User):
-    def __init__(self, pseudo: str, password: str, email: str, admin_name: str):
-        super().__init__(pseudo, password, email)
+    def __init__(self, id_user: int, username: str, password: str, email: str, admin_name: str):
+        super().__init__(id_user, username, password, email)
         self.admin_name = admin_name
 
     @property
