@@ -1,6 +1,6 @@
 import string
 
-from business_object import Administrator, User, Visitor
+from business_object.user import Administrator, RegularUser, User
 from utils.log_utils import log
 
 MIN_PASSWORD_LENGTH = 10
@@ -37,7 +37,7 @@ class UserService:
         if is_admin:  # Thanks to the bool (True) in the user.py
             user = Administrator(username, hashed, email, admin_name=username)
         else:
-            user = Visitor(username, hashed, email, visitor_name=username)
+            user = RegularUser(username, hashed, email, visitor_name=username)
 
         self.user_dao.create(user)
         return user
