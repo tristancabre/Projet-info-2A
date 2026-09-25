@@ -95,9 +95,8 @@ for raw_row in records:
     closest_day = parse_cad_date(record["cd"])
 
     diameter = record.get("diameter")
-    size = int(float(diameter) * 1000) if diameter else None
 
-    id_neo = get_or_create_neo(name, size, int(distance), speed, closest_day)
+    id_neo = get_or_create_neo(name, diameter, int(distance), speed, closest_day)
     inserted_neo += 1
 
     cur.execute(
