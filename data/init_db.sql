@@ -1,4 +1,4 @@
-CREATE SCHEMA project
+CREATE SCHEMA project;
 
 -----------------------------------------------------
 -- User
@@ -8,7 +8,7 @@ CREATE TABLE project.user (
     id_user    SERIAL PRIMARY KEY,
     username     VARCHAR(30) UNIQUE,
     password     VARCHAR(256),
-    email        VARCHAR(50),
+    email        VARCHAR(50) UNIQUE,
     access_token VARCHAR(255)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE project.neo (
     id_neo      SERIAL PRIMARY KEY,
     name        VARCHAR(255),
     size        INT,
-    distance    INT,
+    distance    FLOAT,
     speed       FLOAT,
     closest_day DATE,
     origin      VARCHAR(255),
@@ -44,17 +44,17 @@ CREATE TABLE project.favorites (
 -- Alert
 -----------------------------------------------------
 
-DROP TABLE IF EXISTS project.alerte CASCADE;
+DROP TABLE IF EXISTS project.alert CASCADE;
 CREATE TABLE project.alert (
     id_alert SERIAL PRIMARY KEY,
     id_user INTEGER REFERENCES project.user(id_user),
     id_neo INTEGER REFERENCES project.neo(id_neo),
     min_size    INT,
     max_size    INT,
-    min_distance   INT,
-    max_distance   INT,
-    min_speed    INT,
-    max_speed    INT
+    min_distance   FLOAT,
+    max_distance   FLOAT,
+    min_speed    FLOAT,
+    max_speed    FLOAT
 );
 
 -----------------------------------------------------
