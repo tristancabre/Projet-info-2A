@@ -87,7 +87,7 @@ classDiagram
 
     class NeoService {
         +search_by_name(name : str): Neo
-        +search_by_size(size : int): list[Neo]
+        +search_by_diameter(diameter : int): list[Neo]
         +search_by_composition (composition : list) : list[Neo]
         +search_by_date (closest_day : date): list[Neo]
         +create_neo(Neo): Neo
@@ -117,7 +117,7 @@ classDiagram
 
     class Alert {
         -earth_max_distance: int
-        -min_size: float
+        -min_diameter: float
         -targeted_neo: Neo
         -is_active: bool
         +check(Neo): bool

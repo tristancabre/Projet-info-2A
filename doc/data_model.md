@@ -39,8 +39,8 @@ classDiagram
         id_alert_PK : SERIAL
         #id_user : SERIAL
         #id_neo : SERIAL | NULL
-        min_size : INT | Null
-        max_size : INT | Null
+        min_diameter : INT | Null
+        max_diameter : INT | Null
         min_distance : FLOAT | Null
         max_distance : FLOAT | Null
         min_speed : FLOAT | NULL

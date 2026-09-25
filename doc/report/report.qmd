@@ -6,13 +6,13 @@ format:
   html:
     code-tools: true
   typst:
-    papersize: a4
+    paperdiameter: a4
     margin:
       x: 1.5cm
       y: 2.0cm
     section-numbering: 1.1.a
     mainfont: "Libertinus Serif"
-    fontsize: 11pt
+    fontdiameter: 11pt
 ---
 
 
