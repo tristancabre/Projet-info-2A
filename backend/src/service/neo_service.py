@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from business_objects import Neo
+from business_object import Neo
 
 
 class NeoService:
