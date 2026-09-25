@@ -24,7 +24,6 @@ CREATE TABLE project.neo (
     diameter    INT,
     distance    FLOAT,
     speed       FLOAT,
-    magnitude   FLOAT,
     closest_day DATE,
     rarity      INT
 );
@@ -47,15 +46,15 @@ CREATE TABLE project.favorites (
 
 DROP TABLE IF EXISTS project.alert CASCADE;
 CREATE TABLE project.alert (
-    id_alert     SERIAL PRIMARY KEY,
-    id_user      INTEGER REFERENCES project.user(id_user) ON DELETE CASCADE,
-    id_neo       INTEGER REFERENCES project.neo(id_neo) ON DELETE CASCADE,
-    min_diameter     INT,
-    max_diameter     INT,
-    min_distance FLOAT,
-    max_distance FLOAT,
-    min_speed    FLOAT,   
-    max_speed    FLOAT
+    id_alert        SERIAL PRIMARY KEY,
+    id_user         INTEGER REFERENCES project.user(id_user) ON DELETE CASCADE,
+    id_neo          INTEGER REFERENCES project.neo(id_neo) ON DELETE CASCADE,
+    min_diameter    INT,
+    max_diameter    INT,
+    min_distance    FLOAT,
+    max_distance    FLOAT,
+    min_speed       FLOAT,   
+    max_speed       FLOAT
 );
 
 -----------------------------------------------------
