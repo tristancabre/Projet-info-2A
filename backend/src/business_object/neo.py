@@ -5,14 +5,15 @@ class Neo:
     """Class that represents Neos"""
 
     def __init__(
-        self, name: str, id_neo: int, size: int, distance: int, composition: list, closest_day: date
+        self, name: str, id_neo: int, size: int, distance: int, closest_day: date,
+        speed: float
     ):
         self.name = name
         self.id_neo = id_neo
         self.size = size
         self.distance = distance
-        self.composition = composition
         self.closest_day = closest_day
+        self.speed = speed
 
     def __str__(self):
         return f"Neo({self.name}, id={self.id_neo})"
