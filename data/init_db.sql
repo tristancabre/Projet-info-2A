@@ -21,11 +21,11 @@ DROP TABLE IF EXISTS project.neo CASCADE;
 CREATE TABLE project.neo (
     id_neo      SERIAL PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
-    size        INT,
+    diameter    INT,
     distance    FLOAT,
     speed       FLOAT,
+    magnitude   FLOAT,
     closest_day DATE,
-    origin      VARCHAR(255),
     rarity      INT
 );
 

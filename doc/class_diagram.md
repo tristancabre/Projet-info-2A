@@ -69,13 +69,14 @@ classDiagram
 
     class Neo{
         -name : string
-        -size:int
+        -diameter:int
         -distance : list 
         -speed : int
         -rarity : int
+        -magnitude : float
         -closest_day : date
-        -origin : string
     }
+    
     class NeoDao {
         +create(Neo): bool
         +find_by_name(string): Neo

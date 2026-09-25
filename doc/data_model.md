@@ -27,11 +27,11 @@ classDiagram
     class Neo{
         id_neo_PK : SERIAL
         name : VARCHAR
-        size : INT
+        diameter : INT
         distance : FLOAT
         speed : FLOAT
+        magnitude : FLOAT
         closest_day : DATE
-        origin : VARCHAR
         rarity : INT
     }
 
