@@ -40,6 +40,6 @@ class Administrator(User):
 
     @property
     def is_admin(self) -> bool:
-        """Distinguish roles for different Users : Fase pour Administrators."""
+        """Distinguish roles for different Users : TRUE pour Administrators."""
 
         return True
