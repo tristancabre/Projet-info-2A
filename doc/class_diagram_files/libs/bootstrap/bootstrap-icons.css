@@ -1251,7 +1251,7 @@ url("./bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a") format("woff");
 .bi-text-left::before { content: "\f5c7"; }
 .bi-text-paragraph::before { content: "\f5c8"; }
 .bi-text-right::before { content: "\f5c9"; }
-.bi-textarea-resize::before { content: "\f5ca"; }
+.bi-textarea-rediameter::before { content: "\f5ca"; }
 .bi-textarea-t::before { content: "\f5cb"; }
 .bi-textarea::before { content: "\f5cc"; }
 .bi-thermometer-half::before { content: "\f5cd"; }

@@ -1,11 +1,11 @@
 {
   "workbench.colorTheme": "Visual Studio Dark",
-  "editor.fontSize": 16,
-  "editor.tabSize": 2,
+  "editor.fontdiameter": 16,
+  "editor.tabdiameter": 2,
   "editor.insertSpaces": true,
   "editor.formatOnSave": true,
   "[python]": {
-    "editor.tabSize": 4,
+    "editor.tabdiameter": 4,
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.wordWrap": "wordWrapColumn",
     "editor.wrappingIndent": "indent",

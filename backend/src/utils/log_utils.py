@@ -27,12 +27,12 @@ def initialize_logs(name: str):
         logging.info("-" * 50)
 
 
-def get_logger(module_name: str, max_size: int = 25):
+def get_logger(module_name: str, max_diameter: int = 25):
     """
     Returns a logger with a shortened name based on the module path.
-    If the path exceeds max_size, it uses initials for the prefix parts.
+    If the path exceeds max_diameter, it uses initials for the prefix parts.
     """
-    if len(module_name) <= max_size:
+    if len(module_name) <= max_diameter:
         return logging.getLogger(module_name)
 
     parts = module_name.split(".")
@@ -46,7 +46,7 @@ class LogIndentation:
     """For indenting logs when entering a new method"""
 
     current_indentation = 0
-    indentation_size = 2
+    indentation_diameter = 2
 
     @classmethod
     def increase_indentation(cls):
@@ -61,7 +61,7 @@ class LogIndentation:
     @classmethod
     def get_indentation(cls):
         """Get the current indentation"""
-        return " " * cls.indentation_size * cls.current_indentation
+        return " " * cls.indentation_diameter * cls.current_indentation
 
 
 def log(func):

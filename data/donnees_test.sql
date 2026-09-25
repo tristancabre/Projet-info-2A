@@ -16,7 +16,7 @@ INSERT INTO project.user (username, password, email, access_token) VALUES
 -----------------------------------------------------
 -- NEO (Near-Earth Objects)
 -----------------------------------------------------
-INSERT INTO project.neo (name, size, distance, speed, closest_day, origin, rarity) VALUES
+INSERT INTO project.neo (name, diameter, distance, speed, closest_day, origin, rarity) VALUES
 ('Apophis',       370,   38000,  30.7,  '2029-04-13', 'Ceinture principale', 3),
 ('Bennu',         490,   750000, 28.0,  '2135-09-25', 'Ceinture principale', 2),
 ('Icarus',        1400,  6400000, 27.4, '2026-06-16', 'Ceinture principale', 1),
@@ -41,7 +41,7 @@ INSERT INTO project.favorites (id_user, id_neo, date_added) VALUES
 -----------------------------------------------------
 -- Alert
 -----------------------------------------------------
-INSERT INTO project.alert (id_user, id_neo, min_size, max_size, min_distance, max_distance, min_speed, max_speed) VALUES
+INSERT INTO project.alert (id_user, id_neo, min_diameter, max_diameter, min_distance, max_distance, min_speed, max_speed) VALUES
 (1, 1, 100, 500,   10000,  50000,  10, 40),
 (2, 2, 200, 600,   500000, 1000000, 10, 35),
 (3, NULL, 0,   1000,  0,      2000000, 0,  50),

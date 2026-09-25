@@ -21,10 +21,10 @@
     #image(logo_path, width: 65%)
     #v(3em)
     #line(start: (0cm, 0cm), end: (17cm, 0%), stroke: (thickness: 2pt))
-    #text(size: 24pt, weight: "bold", title)\
+    #text(diameter: 24pt, weight: "bold", title)\
     #line(start: (0cm, 0cm), end: (17cm, 0%), stroke: (thickness: 2pt))
     #v(1em)
-    #text(size: 14pt, team)
+    #text(diameter: 14pt, team)
     #v(2em)
   ]
 
