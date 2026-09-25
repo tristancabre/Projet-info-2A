@@ -34,9 +34,9 @@ const layoutMarginEls = () => {
 };
 
 window.document.addEventListener("DOMContentLoaded", function (_event) {
-  // Recompute the position of margin elements anytime the body size changes
-  if (window.ResizeObserver) {
-    const resizeObserver = new window.ResizeObserver(
+  // Recompute the position of margin elements anytime the body diameter changes
+  if (window.RediameterObserver) {
+    const rediameterObserver = new window.RediameterObserver(
       throttle(() => {
         layoutMarginEls();
         if (
@@ -47,7 +47,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
         }
       }, 50)
     );
-    resizeObserver.observe(window.document.body);
+    rediameterObserver.observe(window.document.body);
   }
 
   const tocEl = window.document.querySelector('nav.toc-active[role="doc-toc"]');
@@ -67,7 +67,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
   };
 
   // dispatch for htmlwidgets
-  // they use slideenter event to trigger resize
+  // they use slideenter event to trigger rediameter
   function fireSlideEnter() {
     const event = window.document.createEvent("Event");
     event.initEvent("slideenter", true, true);
@@ -435,7 +435,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
 
             // Handle positioning of the toggle
             window.addEventListener(
-              "resize",
+              "rediameter",
               throttle(() => {
                 elRect = undefined;
                 positionToggle();
@@ -616,17 +616,17 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
     });
   });
 
-  const kOverlapPaddingSize = 10;
+  const kOverlapPaddingdiameter = 10;
   function toRegions(els) {
     return els.map((el) => {
       const boundRect = el.getBoundingClientRect();
       const top =
         boundRect.top +
         document.documentElement.scrollTop -
-        kOverlapPaddingSize;
+        kOverlapPaddingdiameter;
       return {
         top,
-        bottom: top + el.scrollHeight + 2 * kOverlapPaddingSize,
+        bottom: top + el.scrollHeight + 2 * kOverlapPaddingdiameter,
       };
     });
   }
@@ -810,7 +810,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
     }, 5)
   );
   window.addEventListener(
-    "resize",
+    "rediameter",
     throttle(() => {
       if (tocEl) {
         updateActiveLink();
