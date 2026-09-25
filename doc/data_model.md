@@ -56,14 +56,14 @@ classDiagram
     class ConnectionLog {
         id_connection_PK : SERIAL
         #id_user : SERIAL
-        timestamp : TIMESTAMP
+        connection_moment : TIMESTAMP
     }
 
     class SearchHistory {
         id_search_PK : SERIAL
         #id_user : SERIAL
         search_query : VARCHAR
-        timestamp : TIMESTAMP
+        search_moment : TIMESTAMP
     }
 
     class NeoDistanceHistory {
