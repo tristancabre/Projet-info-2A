@@ -27,10 +27,9 @@ classDiagram
     class Neo{
         id_neo_PK : SERIAL
         name : VARCHAR
-        weight : INT
         size : INT
         distance : INT
-        composition : VARCHAR
+        speed : INT
         closest_day : DATE
         origin : VARCHAR
         rarity : INT
@@ -44,6 +43,8 @@ classDiagram
         max_size : INT | Null
         min_distance : FLOAT | Null
         max_distance : FLOAT | Null
+        min_speed : INT | NULL
+        max_speed : INT | NULL
     }
 
     class Favorites {

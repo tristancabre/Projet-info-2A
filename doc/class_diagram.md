@@ -69,10 +69,9 @@ classDiagram
 
     class Neo{
         -name : string
-        -weight : int
         -size:int
         -distance : list 
-        -composition : list
+        -speed : int
         -rarity : int
         -closest_day : date
         -origin : string
