@@ -30,8 +30,8 @@ class NeoService:
         return [
             n
             for n in self.neo_dao.find_all()
-            if (min_speed is None or n.size >= min_speed) and
-            (max_speed is None or n.size <= max_speed)
+            if (min_speed is None or n.speed >= min_speed) and
+            (max_speed is None or n.speed <= max_speed)
         ]
 
     def search_by_closest_day(self, day: date) -> list[Neo]:
