@@ -18,11 +18,16 @@ class NeoService:
         name = name.strip().lower()
         return [n for n in self.neo_dao.find_all() if name in n.name.lower()]
 
+    def find_all(self) -> list[Neo]:
+        """Returns every registered Neo."""
+        return self.neo_dao.list_all()
+
     def search_by_diameter(self, min_diameter=None, max_diameter=None) -> list[Neo]:
         return [
             n
             for n in self.neo_dao.find_all()
-            if (min_diameter is None or n.diameter >= min_diameter) and (max_diameter is None or n.diameter <= max_diameter)
+            if (min_diameter is None or n.diameter >= min_diameter) and
+            (max_diameter is None or n.diameter <= max_diameter)
         ]
 
     def search_by_speed(self, min_speed=None, max_speed=None) -> list[Neo]:
