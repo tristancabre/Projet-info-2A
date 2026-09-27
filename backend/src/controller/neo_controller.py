@@ -2,7 +2,7 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from dao.neo_dao import NeoDao  # à adapter selon l'emplacement réel de ton DAO
+from dao.neo_dao import NeoDao
 from schema.neo_model import NeoReadModel
 from service.neo_service import NeoService
 from utils.log_utils import get_logger
