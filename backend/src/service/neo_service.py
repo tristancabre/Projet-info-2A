@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from business_object import Neo
+from business_object.neo import Neo
 
 
 class NeoService:
@@ -18,11 +18,16 @@ class NeoService:
         name = name.strip().lower()
         return [n for n in self.neo_dao.find_all() if name in n.name.lower()]
 
+    def find_all(self) -> list[Neo]:
+        """Returns every registered Neo."""
+        return self.neo_dao.list_all()
+
     def search_by_diameter(self, min_diameter=None, max_diameter=None) -> list[Neo]:
         return [
             n
             for n in self.neo_dao.find_all()
-            if (min_diameter is None or n.diameter >= min_diameter) and (max_diameter is None or n.diameter <= max_diameter)
+            if (min_diameter is None or n.diameter >= min_diameter) and
+            (max_diameter is None or n.diameter <= max_diameter)
         ]
 
     def search_by_speed(self, min_speed=None, max_speed=None) -> list[Neo]:
@@ -30,8 +35,8 @@ class NeoService:
         return [
             n
             for n in self.neo_dao.find_all()
-            if (min_speed is None or n.size >= min_speed) and
-            (max_speed is None or n.size <= max_speed)
+            if (min_speed is None or n.speed >= min_speed) and
+            (max_speed is None or n.speed <= max_speed)
         ]
 
     def search_by_closest_day(self, day: date) -> list[Neo]:

@@ -1,4 +1,4 @@
-from business_object import Neo
+from business_object.neo import Neo
 from dao.db_connection import DBConnection
 from utils.log_utils import get_logger, log
 from utils.singleton import Singleton
