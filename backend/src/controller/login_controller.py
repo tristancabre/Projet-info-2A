@@ -1,34 +1,43 @@
-from fastapi import APIRouter, Depends, HTTPException
+# controller/login_controller.py
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
+from utils.auth import create_token
 
-from schema.user_model import UserLoginModel
+from business_object.user import Administrator
+from dao.user_dao import UserDao
 from service.user_service import UserService
-from utils.log_utils import get_logger
 
 router = APIRouter()
 
-logger = get_logger(__name__)
+user_service = UserService(UserDao())
 
 
-def get_user_service():
-    """Dependency provider."""
-    return UserService()
+class ConnectionRequest(BaseModel):
+    username: str
+    password: str
 
 
-@router.post("/", tags=["Login"])
-def login(credentials: UserLoginModel, service=Depends(get_user_service)):
-    """Authenticates a user.
-    Args:
-        credentials: username and password.
-    Returns:
-        dict: containing id_user and username
-    Raises:
-        HTTPException: 401 error if the credentials are invalid or the user does not exist."""
-    logger.info("Login")
-    user = service.login(credentials.username, credentials.password)
-    if user:
-        return {
-            "id_user": user.id_user,
-            "username": user.username,
-            "access_token": user.access_token,
-        }
-    raise HTTPException(status_code=401, detail="Invalid credentials")
+class ConnectionResponse(BaseModel):
+    id_user: int
+    username: str
+    email: str
+    is_admin: bool  # display only (Streamlit), never used to secure anything
+    access_token: str
+    token_type: str = "bearer"
+
+
+@router.post("", response_model=ConnectionResponse)
+def login(request: ConnectionRequest):
+    """Checks the credentials and returns the user's information with a token."""
+    try:
+        user = user_service.login(request.username, request.password)
+    except ValueError as e:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=str(e))
+
+    return ConnectionResponse(
+        id_user=user.id_user,
+        username=user.username,
+        email=user.email,
+        is_admin=isinstance(user, Administrator),
+        access_token=create_token(user.id_user),
+    )

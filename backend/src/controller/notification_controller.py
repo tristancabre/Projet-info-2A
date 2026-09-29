@@ -1,15 +1,17 @@
 # controller/notification_controller.py
 from datetime import datetime
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
+from utils.auth import get_current_user_id
 
 from dao import alert_dao
 from dao.notification_dao import NotificationDao
 from service import neo_service
 from service.notification_service import NotificationService
 
-router = APIRouter(prefix="/users/{id_user}/notifications", tags=["notifications"])
+router = APIRouter(prefix="/notifications", tags=["notifications"])
+
 
 notification_service = NotificationService(NotificationDao())
 
@@ -23,8 +25,8 @@ class NotificationResponse(BaseModel):
 
 
 @router.get("", response_model=list[NotificationResponse])
-def get_notifications(id_user: int):
-    """Returns the notifications received by a user."""
+def get_notifications(id_user: int = Depends(get_current_user_id)):
+    """Returns the notifications of the connected user."""
     return [
         NotificationResponse(
             id_notification=n.id_notification,
