@@ -2,14 +2,19 @@
 Main entry point for the FastAPI web service.
 
 Initializes logging, loads environment variables, and sets up API routers
-for players, login, and games.
+for users, login, neos and notifications.
 """
 
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, RedirectResponse
 
-from controller import login_controller, neo_controller, user_controller
+from controller import (
+    login_controller,
+    neo_controller,
+    notification_controller,
+    user_controller,
+)
 from utils.env_variables import display_values, load_environment_variables
 from utils.log_utils import LogMiddleware, get_logger, initialize_logs
 from utils.reset_database import ResetDatabase
@@ -44,9 +49,11 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
-app.include_router(user_controller.router, prefix="/player", tags=["Players"])
+# Corrections sur les router : passer du modèle Player _ Games à celui des User et Neo
+app.include_router(user_controller.router, prefix="/user", tags=["Users"])
 app.include_router(login_controller.router, prefix="/login", tags=["Login"])
-app.include_router(neo_controller.router, prefix="/game", tags=["Games"])
+app.include_router(neo_controller.router, prefix="/neo", tags=["Neos"])
+app.include_router(notification_controller.router, tags=["Notifications"])
 
 
 @app.get("/", include_in_schema=False)
