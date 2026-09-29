@@ -26,3 +26,10 @@ class NotificationService:
 
     def get_user_notifications(self, id_user: int) -> list[Notification]:
         return self.notification_dao.get_by_user(id_user)
+
+    # service/notification_service.py supplémentaire pour envoyer une notif
+    def check_all_alerts(self, alert_dao, neo_service) -> int:
+        """Checks every active alert against upcoming Neos. Returns the number of new notifications."""
+        neos = neo_service.get_upcoming_neos()
+        alerts = alert_dao.get_all_active()
+        return len(self.generate(alerts, neos))

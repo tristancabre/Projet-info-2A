@@ -15,7 +15,7 @@ class Alert:
         is_active: bool = True,
         id_alert: int | None = None,
     ):
-        self.id_alert = id_alert          # None tant que non enregistrée en base
+        self.id_alert = id_alert  # None tant que non enregistrée en base
         self.id_user = id_user
         self.number_days = number_days
         self.earth_max_distance = earth_max_distance

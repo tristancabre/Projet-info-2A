@@ -4,7 +4,9 @@ from datetime import datetime
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from dao import alert_dao
 from dao.notification_dao import NotificationDao
+from service import neo_service
 from service.notification_service import NotificationService
 
 router = APIRouter(prefix="/users/{id_user}/notifications", tags=["notifications"])
@@ -33,3 +35,12 @@ def get_notifications(id_user: int):
         )
         for n in notification_service.get_user_notifications(id_user)
     ]
+
+
+# check if there are new notifs
+
+
+@router.post("/check", tags=["Notifications"])
+def run_check():
+    count = notification_service.check_all_alerts(alert_dao, neo_service)
+    return {"new_notifications": count}
