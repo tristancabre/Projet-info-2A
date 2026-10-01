@@ -9,6 +9,18 @@ class NeoService:
     def __init__(self, neo_dao):
         self.neo_dao = neo_dao
 
+    def calcul_rarity(self, distance):
+        if distance < 0.01:
+            return 5
+        elif distance < 0.03:
+            return 4
+        elif distance < 0.05:
+            return 3
+        elif distance < 0.1:
+            return 2
+        else:
+            return 1
+
     def search_by_id(self, id_neo: int) -> Neo | None:
         """Returns the Neo with this id, or None if it does not exist."""
         return self.neo_dao.find_by_id(id_neo)

@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS project.neo CASCADE;
 CREATE TABLE project.neo (
     id_neo      SERIAL PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
-    diameter    INT,
+    diameter    FLOAT,
     distance    FLOAT,
     speed       FLOAT,
     closest_day DATE,

@@ -1,9 +1,9 @@
-import os
 from datetime import datetime
 
-import psycopg2
 import requests
-from dotenv import load_dotenv
+
+from dao.db_connection import DBConnection
+from service.neo_service import NeoService
 
 # ============================================================
 # 1. Récupération des données depuis l'API NASA
@@ -58,55 +58,21 @@ if neos:
 # 3. Connexion à PostgreSQL
 # ============================================================
 
-load_dotenv()
-
-
-# Récupération des variables d'environnement
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-
-
-# Vérification
-variables = {
-    "DB_HOST": DB_HOST,
-    "DB_PORT": DB_PORT,
-    "DB_NAME": DB_NAME,
-    "DB_USER": DB_USER,
-    "DB_PASSWORD": DB_PASSWORD
-}
-
-variables_manquantes = [
-    nom for nom, valeur in variables.items()
-    if valeur is None
-]
-
-if variables_manquantes:
-    raise ValueError(
-        f"Variables d'environnement manquantes : "
-        f"{', '.join(variables_manquantes)}"
-    )
-
-
-# Connexion
-connexion = psycopg2.connect(
-    host=DB_HOST,
-    port=DB_PORT,
-    database=DB_NAME,
-    user=DB_USER,
-    password=DB_PASSWORD
-)
+connexion = DBConnection.connection
 
 print("Connexion à PostgreSQL réussie !")
 
 cursor = connexion.cursor()
 
-
 # ============================================================
 # 4. Insertion dans PostgreSQL
 # ============================================================
+
+
+def vers_float(valeur):
+    """Convertit en float, ou renvoie None si la valeur est absente."""
+    return float(valeur) if valeur is not None else None
+
 
 requete = """
     INSERT INTO project.neo
@@ -115,54 +81,26 @@ requete = """
         (%s, %s, %s, %s, %s, %s)
 """
 
-
-def calcul_rarity(distance):
-    if distance < 0.01:
-        return 5
-    elif distance < 0.03:
-        return 4
-    elif distance < 0.05:
-        return 3
-    elif distance < 0.1:
-        return 2
-    else:
-        return 1
-
-
 for neo in neos:
 
-    name = neo.get("fullname") or neo.get("des")
+    name = (neo.get("fullname") or neo.get("des")).strip()
 
-    diameter = neo.get("diameter")
+    diameter = vers_float(neo.get("diameter"))
+    distance = vers_float(neo.get("dist"))
+    speed = vers_float(neo.get("v_rel"))
 
-    distance = neo.get("dist")
-
-    speed = neo.get("v_rel")
-
-    # Exemple :
-    # "2026-Sep-27 15:42"
     date_str = neo.get("cd")
 
     if date_str:
-        closest_day = datetime.strptime(
-            date_str[:11],
-            "%Y-%b-%d"
-        ).date()
+        closest_day = datetime.strptime(date_str[:11], "%Y-%b-%d").date()
     else:
         closest_day = None
 
-    rarity = calcul_rarity(distance)
+    rarity = NeoService.calcul_rarity(distance)
 
     cursor.execute(
         requete,
-        (
-            name,
-            diameter,
-            distance,
-            speed,
-            closest_day,
-            rarity
-        )
+        (name, diameter, distance, speed, closest_day, rarity)
     )
 
 
