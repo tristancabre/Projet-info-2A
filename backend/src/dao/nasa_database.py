@@ -1,4 +1,4 @@
-import os
+# import os
 from datetime import datetime
 
 import psycopg2
@@ -62,11 +62,11 @@ load_dotenv()
 
 
 # Récupération des variables d'environnement
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = "postgresql-cnpg-338919-rw.user-tristancabre"
+DB_PORT = "5432"
+DB_NAME = "defaultdb"
+DB_USER = "user-tristancabre"
+DB_PASSWORD = "ias0dmastdgc2h5eex0g"
 
 
 # Vérification
@@ -103,17 +103,9 @@ print("Connexion à PostgreSQL réussie !")
 
 cursor = connexion.cursor()
 
-
 # ============================================================
-# 4. Insertion dans PostgreSQL
+# 3.bis Quelques fonctions de traitement des données
 # ============================================================
-
-requete = """
-    INSERT INTO project.neo
-        (name, diameter, distance, speed, closest_day, rarity)
-    VALUES
-        (%s, %s, %s, %s, %s, %s)
-"""
 
 
 def calcul_rarity(distance):
@@ -129,25 +121,34 @@ def calcul_rarity(distance):
         return 1
 
 
+def vers_float(valeur):
+    """Convertit en float, ou renvoie None si la valeur est absente."""
+    return float(valeur) if valeur is not None else None
+
+# ============================================================
+# 4. Insertion dans PostgreSQL
+# ============================================================
+
+
+requete = """
+    INSERT INTO project.neo
+        (name, diameter, distance, speed, closest_day, rarity)
+    VALUES
+        (%s, %s, %s, %s, %s, %s)
+"""
+
 for neo in neos:
 
-    name = neo.get("fullname") or neo.get("des")
+    name = (neo.get("fullname") or neo.get("des")).strip()
 
-    diameter = neo.get("diameter")
+    diameter = vers_float(neo.get("diameter"))
+    distance = vers_float(neo.get("dist"))
+    speed = vers_float(neo.get("v_rel"))
 
-    distance = neo.get("dist")
-
-    speed = neo.get("v_rel")
-
-    # Exemple :
-    # "2026-Sep-27 15:42"
     date_str = neo.get("cd")
 
     if date_str:
-        closest_day = datetime.strptime(
-            date_str[:11],
-            "%Y-%b-%d"
-        ).date()
+        closest_day = datetime.strptime(date_str[:11], "%Y-%b-%d").date()
     else:
         closest_day = None
 
@@ -155,14 +156,7 @@ for neo in neos:
 
     cursor.execute(
         requete,
-        (
-            name,
-            diameter,
-            distance,
-            speed,
-            closest_day,
-            rarity
-        )
+        (name, diameter, distance, speed, closest_day, rarity)
     )
 
 
