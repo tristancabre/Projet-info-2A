@@ -41,7 +41,7 @@ def get_current_user_id(
         payload = jwt.decode(credentials.credentials, _secret_key(), algorithms=[ALGORITHM])
         return int(payload["sub"])
     except (jwt.PyJWTError, KeyError, ValueError):
-        HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
 
 
 def get_current_user(id_user: int = Depends(get_current_user_id)) -> User:
