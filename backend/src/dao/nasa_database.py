@@ -1,9 +1,9 @@
-# import os
 from datetime import datetime
 
-import psycopg2
 import requests
-from dotenv import load_dotenv
+
+from dao.db_connection import DBConnection
+from service.neo_service import NeoService
 
 # ============================================================
 # 1. Récupération des données depuis l'API NASA
@@ -58,76 +58,20 @@ if neos:
 # 3. Connexion à PostgreSQL
 # ============================================================
 
-load_dotenv()
-
-
-# Récupération des variables d'environnement
-DB_HOST = "postgresql-cnpg-338919-rw.user-tristancabre"
-DB_PORT = "5432"
-DB_NAME = "defaultdb"
-DB_USER = "user-tristancabre"
-DB_PASSWORD = "ias0dmastdgc2h5eex0g"
-
-
-# Vérification
-variables = {
-    "DB_HOST": DB_HOST,
-    "DB_PORT": DB_PORT,
-    "DB_NAME": DB_NAME,
-    "DB_USER": DB_USER,
-    "DB_PASSWORD": DB_PASSWORD
-}
-
-variables_manquantes = [
-    nom for nom, valeur in variables.items()
-    if valeur is None
-]
-
-if variables_manquantes:
-    raise ValueError(
-        f"Variables d'environnement manquantes : "
-        f"{', '.join(variables_manquantes)}"
-    )
-
-
-# Connexion
-connexion = psycopg2.connect(
-    host=DB_HOST,
-    port=DB_PORT,
-    database=DB_NAME,
-    user=DB_USER,
-    password=DB_PASSWORD
-)
+connexion = DBConnection.connection
 
 print("Connexion à PostgreSQL réussie !")
 
 cursor = connexion.cursor()
 
 # ============================================================
-# 3.bis Quelques fonctions de traitement des données
+# 4. Insertion dans PostgreSQL
 # ============================================================
-
-
-def calcul_rarity(distance):
-    if distance < 0.01:
-        return 5
-    elif distance < 0.03:
-        return 4
-    elif distance < 0.05:
-        return 3
-    elif distance < 0.1:
-        return 2
-    else:
-        return 1
 
 
 def vers_float(valeur):
     """Convertit en float, ou renvoie None si la valeur est absente."""
     return float(valeur) if valeur is not None else None
-
-# ============================================================
-# 4. Insertion dans PostgreSQL
-# ============================================================
 
 
 requete = """
@@ -152,7 +96,7 @@ for neo in neos:
     else:
         closest_day = None
 
-    rarity = calcul_rarity(distance)
+    rarity = NeoService.calcul_rarity(distance)
 
     cursor.execute(
         requete,
