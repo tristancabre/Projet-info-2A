@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 
 class User(ABC):
-    def __init__(self, id_user: int, username: str, password: str, email: str):
+    def __init__(self, username: str, password: str, email: str, id_user: int | None = None):
         self.id_user = id_user
         self.username = username
         self.password = password
@@ -23,23 +23,36 @@ class User(ABC):
 
 
 class RegularUser(User):
-    def __init__(self, id_user: int, username: str, password: str, email: str, visitor_name: str):
-        super().__init__(id_user, username, password, email)
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        email: str,
+        visitor_name: str,
+        id_user: int | None = None,
+    ):
+        super().__init__(username, password, email, id_user)
         self.visitor_name = visitor_name
 
     @property
     def is_admin(self) -> bool:
-        """Distinguish roles for different Users : Fase for Visitors"""
+        """Distinguish roles for different Users: False for Visitors."""
         return False
 
 
 class Administrator(User):
-    def __init__(self, id_user: int, username: str, password: str, email: str, admin_name: str):
-        super().__init__(id_user, username, password, email)
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        email: str,
+        admin_name: str,
+        id_user: int | None = None,
+    ):
+        super().__init__(username, password, email, id_user)
         self.admin_name = admin_name
 
     @property
     def is_admin(self) -> bool:
-        """Distinguish roles for different Users : TRUE for Administrators."""
-
+        """Distinguish roles for different Users: True for Administrators."""
         return True

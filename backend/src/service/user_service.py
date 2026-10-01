@@ -66,7 +66,9 @@ class UserService:
         user = self.user_dao.find_by_username(username)
         if user is None or not user.check_password(password):
             raise ValueError("username or password incorrect, try again")
+        self.user_dao.record_connection(user.id_user)
         return user
+
 
     @log
     def update(self, user: User, new_password: str | None = None) -> User:
