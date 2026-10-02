@@ -1,7 +1,8 @@
 # business_object/notification.py
 from datetime import datetime
 
-from business_object import Alert, Neo
+from business_object.alert import Alert
+from business_object.neo import Neo
 
 
 class Notification:

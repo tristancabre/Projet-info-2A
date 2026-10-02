@@ -1,6 +1,6 @@
 # dao/alert_dao.py
 from business_object.alert import Alert
-from dao.db_connection import get_connection
+from dao.db_connection import DBConnection
 
 
 class AlertDao:
@@ -18,7 +18,7 @@ class AlertDao:
         )
 
     def create(self, alert: Alert) -> Alert:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             cur = conn.execute(
                 """INSERT INTO alert (id_user, number_days, earth_max_distance,
                                       min_diameter, min_speed, targeted_neo_id, is_active)
@@ -37,22 +37,22 @@ class AlertDao:
         return alert
 
     def get_by_id(self, id_alert: int) -> Alert | None:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             row = conn.execute("SELECT * FROM alert WHERE id_alert = ?", (id_alert,)).fetchone()
         return self._to_alert(row) if row else None
 
     def get_by_user(self, id_user: int) -> list[Alert]:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             rows = conn.execute("SELECT * FROM alert WHERE id_user = ?", (id_user,)).fetchall()
         return [self._to_alert(r) for r in rows]
 
     def get_all_active(self) -> list[Alert]:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             rows = conn.execute("SELECT * FROM alert WHERE is_active = 1").fetchall()
         return [self._to_alert(r) for r in rows]
 
     def update(self, alert: Alert) -> bool:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             cur = conn.execute(
                 """UPDATE alert SET number_days = ?, earth_max_distance = ?,
                           min_diameter = ?, min_speed = ?, targeted_neo_id = ?,
@@ -71,6 +71,6 @@ class AlertDao:
         return cur.rowcount > 0
 
     def delete(self, id_alert: int) -> bool:
-        with get_connection() as conn:
+        with DBConnection.connection() as conn:
             cur = conn.execute("DELETE FROM alert WHERE id_alert = ?", (id_alert,))
         return cur.rowcount > 0

@@ -1,6 +1,6 @@
 from datetime import date
 
-from business_object import Neo
+from business_object.neo import Neo
 
 
 class Alert:

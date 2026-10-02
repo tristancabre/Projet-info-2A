@@ -1,5 +1,6 @@
 # service/notification_service.py
-from business_object import Alert, Neo
+from business_object.alert import Alert
+from business_object.neo import Neo
 from business_object.notification import Notification
 from dao.notification_dao import NotificationDao
 
