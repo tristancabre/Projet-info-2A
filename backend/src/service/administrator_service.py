@@ -12,7 +12,7 @@ class AdministratorService(UserService):
             raise PermissionError("Administrators only")
         self.admin = admin
 
-    # Manage accounts with update and delete, 
+    # Manage accounts with update and delete,
 
     @log
     def update_account(
@@ -55,5 +55,6 @@ class AdministratorService(UserService):
         if id_user is not None and self.find_by_id(id_user) is None:
             raise ValueError("Utilisateur introuvable.")
         return self.user_dao.get_connection_history(id_user, limit)
+
     def update_nasa(self):
         pass # Voir en groupe façon de faire
