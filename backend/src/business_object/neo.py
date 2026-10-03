@@ -5,8 +5,13 @@ class Neo:
     """Class that represents Neos"""
 
     def __init__(
-        self, name: str, id_neo: int, diameter: int, distance: int, closest_day: date,
-        speed: float
+        self,
+        name: str,
+        id_neo: int,
+        diameter: float | None,
+        distance: float,
+        closest_day: date,
+        speed: float | None,
     ):
         self.name = name
         self.id_neo = id_neo
