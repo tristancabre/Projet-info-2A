@@ -132,6 +132,43 @@ class UserDao(metaclass=Singleton):
         return res > 0
 
     @log
+    def login(self, username: str, password: str) -> User:
+        """Login using username and password.
+        Args:
+            username (str)
+            password (str)
+        Returns:
+            User or None
+        """
+        res = None
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT *                               "
+                        "  FROM user                            "
+                        " WHERE username = %(username)s         "
+                        "   AND password = %(password)s;        ",
+                        {"username": username, "password": password},
+                    )
+                    res = cursor.fetchone()
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        user = None
+
+        if res:
+            user = User(
+                username=res["username"],
+                password=res["password"],
+                email=res["email"],
+                id_user=res["id_user"],
+            )
+
+        return user
+
+    @log
     def find_by_id(self, id_user: int) -> User | None:
         """Find a user by their id."""
         try:

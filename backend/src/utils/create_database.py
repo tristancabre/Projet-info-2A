@@ -2,25 +2,16 @@ from dao.db_connection import DBConnection
 
 
 def create_database():
-
-    connection = DBConnection.connection
+    connection = DBConnection().connection
     cursor = connection.cursor()
 
     try:
-
-        # Création du schéma
         cursor.execute("""
             CREATE SCHEMA IF NOT EXISTS project;
         """)
 
-        # --------------------------------------------------
-        # User
-        # --------------------------------------------------
-
         cursor.execute("""
-            DROP TABLE IF EXISTS project.users CASCADE;
-
-            CREATE TABLE project.users (
+            CREATE TABLE IF NOT EXISTS project.users (
                 id_user      SERIAL PRIMARY KEY,
                 username     VARCHAR(30) UNIQUE NOT NULL,
                 password     VARCHAR(256) NOT NULL,
@@ -29,14 +20,8 @@ def create_database():
             );
         """)
 
-        # --------------------------------------------------
-        # NEO
-        # --------------------------------------------------
-
         cursor.execute("""
-            DROP TABLE IF EXISTS project.neo CASCADE;
-
-            CREATE TABLE project.neo (
+            CREATE TABLE IF NOT EXISTS project.neo (
                 id_neo      SERIAL PRIMARY KEY,
                 name        VARCHAR(255) NOT NULL,
                 diameter    FLOAT,
@@ -52,9 +37,7 @@ def create_database():
         # --------------------------------------------------
 
         cursor.execute("""
-            DROP TABLE IF EXISTS project.favorites CASCADE;
-
-            CREATE TABLE project.favorites (
+            CREATE TABLE IF NOT EXISTS project.favorites (
                 id_favorite SERIAL PRIMARY KEY,
                 id_user     INTEGER REFERENCES project.users(id_user)
                             ON DELETE CASCADE,
@@ -69,9 +52,7 @@ def create_database():
         # --------------------------------------------------
 
         cursor.execute("""
-            DROP TABLE IF EXISTS project.alert CASCADE;
-
-            CREATE TABLE project.alert (
+            CREATE TABLE IF NOT EXISTS project.alert (
                 id_alert        SERIAL PRIMARY KEY,
                 id_user         INTEGER REFERENCES project.users(id_user)
                                 ON DELETE CASCADE,
@@ -91,9 +72,7 @@ def create_database():
         # --------------------------------------------------
 
         cursor.execute("""
-            DROP TABLE IF EXISTS project.neodistancehistory CASCADE;
-
-            CREATE TABLE project.neodistancehistory (
+            CREATE TABLE IF NOT EXISTS project.neodistancehistory (
                 id_distance_history SERIAL PRIMARY KEY,
                 id_neo              INTEGER
                                      REFERENCES project.neo(id_neo)
@@ -108,9 +87,7 @@ def create_database():
         # --------------------------------------------------
 
         cursor.execute("""
-            DROP TABLE IF EXISTS project.connectionlog CASCADE;
-
-            CREATE TABLE project.connectionlog (
+            CREATE TABLE IF NOT EXISTS project.connectionlog (
                 id_connection     SERIAL PRIMARY KEY,
                 id_user           INTEGER
                                    REFERENCES project.users(id_user)
@@ -124,9 +101,7 @@ def create_database():
         # --------------------------------------------------
 
         cursor.execute("""
-            DROP TABLE IF EXISTS project.searchhistory CASCADE;
-
-            CREATE TABLE project.searchhistory (
+            CREATE TABLE IF NOT EXISTS project.searchhistory (
                 id_search     SERIAL PRIMARY KEY,
                 id_user       INTEGER
                               REFERENCES project.users(id_user)
@@ -152,7 +127,6 @@ def create_database():
     finally:
 
         cursor.close()
-        connection.close()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from date import datetime
+from datetime import datetime
 
 from business_object.neo import Neo
 from dao.db_connection import DBConnection
@@ -22,7 +22,7 @@ class NeoDao(metaclass=Singleton):
         return float(valeur) if valeur is not None else None
 
     nasa_dao = NasaDao()
-    neos = nasa_dao.recuperer_donnees()
+    neos = nasa_dao.recuperer_donnees_nasa()
 
     @log
     def inserer_donnees_sql(self, neos: list[dict]) -> bool:
