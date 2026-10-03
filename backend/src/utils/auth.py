@@ -7,14 +7,13 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from business_object.user import Administrator, User
-from dao.user_dao import UserDao
 from service.user_service import UserService
 
 ALGORITHM = "HS256"
 TOKEN_EXPIRE_MINUTES = 60
 
 bearer = HTTPBearer()
-user_service = UserService(UserDao())
+user_service = UserService()
 
 
 def _secret_key() -> str:
@@ -41,7 +40,7 @@ def get_current_user_id(
         payload = jwt.decode(credentials.credentials, _secret_key(), algorithms=[ALGORITHM])
         return int(payload["sub"])
     except (jwt.PyJWTError, KeyError, ValueError):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
+        HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid or expired token")
 
 
 def get_current_user(id_user: int = Depends(get_current_user_id)) -> User:

@@ -1,6 +1,7 @@
 import string
 
 from business_object.user import Administrator, RegularUser, User
+from dao.user_dao import UserDao
 from utils.log_utils import log
 
 MIN_PASSWORD_LENGTH = 10
@@ -8,9 +9,6 @@ MIN_PASSWORD_LENGTH = 10
 
 class UserService:
     """The services for the users."""
-
-    def __init__(self, user_dao):
-        self.user_dao = user_dao
 
     @staticmethod
     def validate_password(password: str) -> None:
@@ -24,7 +22,7 @@ class UserService:
 
     def username_already_used(self, username: str) -> bool:
         """True if a user with this username already exists."""
-        return self.user_dao.find_by_username(username) is not None
+        return UserDao().find_by_username(username) is not None
 
     @log
     def create(self, username: str, password: str, email: str, is_admin: bool = False) -> User:
@@ -39,17 +37,17 @@ class UserService:
         else:
             user = RegularUser(username, hashed, email, visitor_name=username)
 
-        self.user_dao.create(user)
+        UserDao().create(user)
         return user
 
     @log
     def list_all(self) -> list[User]:
-        return self.user_dao.list_all()
+        return UserDao().list_all()
 
     @log
     def find_by_username(self, username: str) -> User | None:
         """Returns the user with this username, or None."""
-        return self.user_dao.find_by_username(username)
+        return UserDao().find_by_username(username)
 
     @log
     def find_by_id(self, id_user: int) -> User | None:
@@ -59,21 +57,20 @@ class UserService:
         Returns:
             Player object if found, otherwise None.
         """
-        return self.user_dao.find_by_id(id_user)
+        return UserDao().find_by_id(id_user)
 
     @log
     def login(self, username: str, password: str) -> User:
-        user = self.user_dao.find_by_username(username)
+        user = UserDao().find_by_username(username)
         if user is None or not user.check_password(password):
             raise ValueError("username or password incorrect, try again")
-        self.user_dao.record_connection(user.id_user)
+        UserDao().record_connection(user.id_user)
         return user
-
 
     @log
     def update(self, user: User, new_password: str | None = None) -> User:
         """Updates a user. If update a password, it is validated then hashed."""
-        other = self.user_dao.find_by_username(user.username)
+        other = UserDao().find_by_username(user.username)
         if other is not None and other.id_user != user.id_user:
             raise ValueError("username already used, find something else")
 
@@ -81,9 +78,9 @@ class UserService:
             self.validate_password(new_password)
             user.password = User.hash_password(new_password)
 
-        self.user_dao.update(user)
+        UserDao().update(user)
         return user
 
     @log
     def delete(self, user: User) -> bool:
-        return self.user_dao.delete(user)
+        return UserDao.delete(user)

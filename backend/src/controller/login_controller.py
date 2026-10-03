@@ -2,14 +2,13 @@
 from fastapi import APIRouter, HTTPException, status
 
 from business_object.user import Administrator
-from dao.user_dao import UserDao
 from schema.login_model import ConnectionRequest, ConnectionResponse
 from service.user_service import UserService
 from utils.auth import create_token
 
 router = APIRouter()
 
-user_service = UserService(UserDao())
+user_service = UserService()
 
 
 @router.post("", response_model=ConnectionResponse)
