@@ -3,7 +3,6 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from dao.nasa_dao import NasaDao
-from dao.neo_dao import NeoDao
 from schema.neo_model import NeoReadModel
 from service.neo_service import NeoService
 from utils.log_utils import get_logger
@@ -15,7 +14,7 @@ logger = get_logger(__name__)
 
 def get_neo_service():
     """Dependency Injection provider for NeoService."""
-    return NeoService(NeoDao())
+    return NeoService()
 
 
 # --- Routes "statiques" déclarées AVANT /{id_neo} pour éviter tout conflit ---

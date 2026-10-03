@@ -1,9 +1,8 @@
 # controller/admin_controller.py
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from schema.user_schema import ConnectionLogResponse, UpdateAccountRequest, UserResponse
 
 from business_object.user import Administrator
-from dao.user_dao import UserDao
-from schema.user_schema import ConnectionLogResponse, UpdateAccountRequest, UserResponse
 from service.administrator_service import AdministratorService
 from utils.auth import require_admin
 
@@ -12,7 +11,7 @@ router = APIRouter()
 
 def get_admin_service(admin: Administrator = Depends(require_admin)) -> AdministratorService:
     """Builds the service for the authenticated administrator."""
-    return AdministratorService(UserDao(), admin)
+    return AdministratorService(admin)
 
 
 def http_error(e: ValueError) -> HTTPException:
@@ -54,7 +53,7 @@ def update_user(
             new_password=request.password,
         )
     except ValueError as e:
-        raise http_error(e)
+        http_error(e)
     return UserResponse.from_user(user)
 
 
@@ -64,7 +63,7 @@ def delete_user(id_user: int, service: AdministratorService = Depends(get_admin_
     try:
         service.delete_account(id_user)
     except ValueError as e:
-        raise http_error(e)
+        http_error(e)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -78,4 +77,4 @@ def connection_history(
     try:
         return service.view_connection_history(id_user, limit)
     except ValueError as e:
-        raise http_error(e)
+        http_error(e)

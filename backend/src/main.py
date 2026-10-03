@@ -42,7 +42,7 @@ display_values()
 logger = get_logger(__name__)
 
 
-app = FastAPI(title="NEO-Watch")
+app = FastAPI(title="Ker Lann NEO-Watch")
 
 app.add_middleware(LogMiddleware)
 
