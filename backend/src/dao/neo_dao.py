@@ -1,5 +1,9 @@
+from date import datetime
+
 from business_object.neo import Neo
 from dao.db_connection import DBConnection
+from dao.nasa_dao import NasaDao
+from service.neo_service import NeoService
 from utils.log_utils import get_logger, log
 from utils.singleton import Singleton
 
@@ -8,6 +12,103 @@ logger = get_logger(__name__)
 
 class NeoDao(metaclass=Singleton):
     """ Class containing methods to access NEOs in the database."""
+
+    @staticmethod
+    def vers_float(valeur):
+        """
+        Convertit une valeur en float.
+        Retourne None si la valeur est absente.
+        """
+        return float(valeur) if valeur is not None else None
+
+    nasa_dao = NasaDao()
+    neos = nasa_dao.recuperer_donnees()
+
+    @log
+    def inserer_donnees_sql(self, neos: list[dict]) -> bool:
+        """
+    Insère une liste de NEO dans la base PostgreSQL.
+
+    Args:
+        neos: Liste de dictionnaires contenant les données
+              récupérées depuis l'API NASA.
+
+    Returns:
+        True si l'insertion est réussie, False sinon.
+        """
+
+        requete = """
+            INSERT INTO project.neo
+                (name, diameter, distance, speed, closest_day, rarity)
+            VALUES
+                (%(name)s, %(diameter)s, %(distance)s, %(speed)s,
+                %(closest_day)s, %(rarity)s);
+        """
+
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor:
+
+                    for neo in neos:
+
+                        # Nom du NEO
+                        name = (
+                            neo.get("fullname")
+                            or neo.get("des"))
+
+                        if name:
+                            name = name.strip()
+
+                        # Conversion des valeurs numériques
+                        diameter = self.vers_float(
+                            neo.get("diameter"))
+
+                        distance = self.vers_float(
+                            neo.get("dist"))
+
+                        speed = self.vers_float(
+                            neo.get("v_rel"))
+
+                        # Conversion de la date
+                        date_str = neo.get("cd")
+
+                        if date_str:
+                            closest_day = datetime.strptime(
+                                date_str[:11],
+                                "%Y-%b-%d"
+                            ).date()
+                        else:
+                            closest_day = None
+
+                        # Calcul de la rareté
+                        rarity = NeoService.calcul_rarity(
+                            distance
+                        )
+
+                        # Insertion
+                        cursor.execute(
+                            requete,
+                            {
+                                "name": name,
+                                "diameter": diameter,
+                                "distance": distance,
+                                "speed": speed,
+                                "closest_day": closest_day,
+                                "rarity": rarity
+                            }
+                        )
+
+            logger.info(
+                "%d NEO insérés dans PostgreSQL.",
+                len(neos))
+
+            return True
+
+        except Exception as e:
+            logger.error(
+                "Erreur lors de l'insertion des NEO : %s",
+                e)
+            raise
 
     @log
     def create(self, neo: Neo) -> bool:
