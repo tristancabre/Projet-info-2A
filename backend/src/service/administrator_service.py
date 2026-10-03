@@ -6,8 +6,9 @@ from utils.log_utils import log
 class AdministratorService(UserService):
     """Service for administrators : manage accounts, view history"""
 
-    def __init__(self, user_dao, admin: Administrator):
-        super().__init__(user_dao)
+    def __init__(self, admin: Administrator):
+        super().__init__(self)
+
         if not admin.is_admin:
             raise PermissionError("Administrators only")
         self.admin = admin

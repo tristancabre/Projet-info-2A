@@ -3,17 +3,16 @@ from datetime import datetime
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from utils.auth import get_current_user_id
 
 from dao import alert_dao
-from dao.notification_dao import NotificationDao
 from service import neo_service
 from service.notification_service import NotificationService
+from utils.auth import get_current_user_id
 
 router = APIRouter(prefix="/notifications", tags=["notifications"])
 
 
-notification_service = NotificationService(NotificationDao())
+notification_service = NotificationService()
 
 
 class NotificationResponse(BaseModel):

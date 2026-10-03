@@ -6,8 +6,8 @@ from dao.notification_dao import NotificationDao
 
 
 class NotificationService:
-    def __init__(self, notification_dao: NotificationDao):
-        self.notification_dao = notification_dao
+    def __init__(self):
+        self.notification_dao = NotificationDao()
 
     def generate(self, alerts: list[Alert], neos: list[Neo]) -> list[Notification]:
         """Create and save notifications for Neos matching an alert."""

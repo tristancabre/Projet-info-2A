@@ -1,6 +1,7 @@
 # service/alert_service.py
 from business_object.alert import Alert
 from dao.alert_dao import AlertDao
+from service.neo_service import NeoService
 from service.notification_service import NotificationService
 
 
@@ -9,16 +10,13 @@ class AlertNotFoundError(Exception):
 
 
 class AlertService:
-    def __init__(
-        self,
-        alert_dao: AlertDao,
-        notification_service: NotificationService | None = None,
-        neo_service=None,
-    ):
-        self.alert_dao = alert_dao
+
+    def __init__(self):
+
+        self.alert_dao = AlertDao()
         # Optional: only needed to check the alert right after its creation
-        self.notification_service = notification_service
-        self.neo_service = neo_service
+        self.notification_service = NotificationService | None
+        self.neo_service = NeoService()
 
     def create_alert(
         self,

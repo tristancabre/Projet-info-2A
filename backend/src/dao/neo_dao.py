@@ -3,7 +3,6 @@ from datetime import datetime
 from business_object.neo import Neo
 from dao.db_connection import DBConnection
 from dao.nasa_dao import NasaDao
-from service.neo_service import NeoService
 from utils.log_utils import get_logger, log
 from utils.singleton import Singleton
 
@@ -11,7 +10,7 @@ logger = get_logger(__name__)
 
 
 class NeoDao(metaclass=Singleton):
-    """ Class containing methods to access NEOs in the database."""
+    """Class containing methods to access NEOs in the database."""
 
     @staticmethod
     def vers_float(valeur):
@@ -21,20 +20,32 @@ class NeoDao(metaclass=Singleton):
         """
         return float(valeur) if valeur is not None else None
 
+    def calcul_rarity(self, distance):
+        if distance < 0.01:
+            return 5
+        elif distance < 0.03:
+            return 4
+        elif distance < 0.05:
+            return 3
+        elif distance < 0.1:
+            return 2
+        else:
+            return 1
+
     nasa_dao = NasaDao()
     neos = nasa_dao.recuperer_donnees_nasa()
 
     @log
     def inserer_donnees_sql(self, neos: list[dict]) -> bool:
         """
-    Insère une liste de NEO dans la base PostgreSQL.
+        Insère une liste de NEO dans la base PostgreSQL.
 
-    Args:
-        neos: Liste de dictionnaires contenant les données
-              récupérées depuis l'API NASA.
+        Args:
+            neos: Liste de dictionnaires contenant les données
+                  récupérées depuis l'API NASA.
 
-    Returns:
-        True si l'insertion est réussie, False sinon.
+        Returns:
+            True si l'insertion est réussie, False sinon.
         """
 
         requete = """
@@ -48,42 +59,30 @@ class NeoDao(metaclass=Singleton):
         try:
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
-
                     for neo in neos:
-
                         # Nom du NEO
-                        name = (
-                            neo.get("fullname")
-                            or neo.get("des"))
+                        name = neo.get("fullname") or neo.get("des")
 
                         if name:
                             name = name.strip()
 
                         # Conversion des valeurs numériques
-                        diameter = self.vers_float(
-                            neo.get("diameter"))
+                        diameter = self.vers_float(neo.get("diameter"))
 
-                        distance = self.vers_float(
-                            neo.get("dist"))
+                        distance = self.vers_float(neo.get("dist"))
 
-                        speed = self.vers_float(
-                            neo.get("v_rel"))
+                        speed = self.vers_float(neo.get("v_rel"))
 
                         # Conversion de la date
                         date_str = neo.get("cd")
 
                         if date_str:
-                            closest_day = datetime.strptime(
-                                date_str[:11],
-                                "%Y-%b-%d"
-                            ).date()
+                            closest_day = datetime.strptime(date_str[:11], "%Y-%b-%d").date()
                         else:
                             closest_day = None
 
                         # Calcul de la rareté
-                        rarity = NeoService.calcul_rarity(
-                            distance
-                        )
+                        rarity = self.calcul_rarity(distance)
 
                         # Insertion
                         cursor.execute(
@@ -94,20 +93,16 @@ class NeoDao(metaclass=Singleton):
                                 "distance": distance,
                                 "speed": speed,
                                 "closest_day": closest_day,
-                                "rarity": rarity
-                            }
+                                "rarity": rarity,
+                            },
                         )
 
-            logger.info(
-                "%d NEO insérés dans PostgreSQL.",
-                len(neos))
+            logger.info("%d NEO insérés dans PostgreSQL.", len(neos))
 
             return True
 
         except Exception as e:
-            logger.error(
-                "Erreur lors de l'insertion des NEO : %s",
-                e)
+            logger.error("Erreur lors de l'insertion des NEO : %s", e)
             raise
 
     @log
@@ -133,7 +128,7 @@ class NeoDao(metaclass=Singleton):
                             "diameter": neo.diameter,
                             "distance": neo.distance,
                             "closest_day": neo.closest_day,
-                            "speed": neo.speed
+                            "speed": neo.speed,
                         },
                     )
                     res = cursor.fetchone()
@@ -178,7 +173,7 @@ class NeoDao(metaclass=Singleton):
                 distance=res["distance"],
                 closest_day=res["closest_day"],
                 id_neo=res["id_neo"],
-                speed=res["speed"]
+                speed=res["speed"],
             )
 
         return neo
@@ -214,7 +209,7 @@ class NeoDao(metaclass=Singleton):
                 distance=res["distance"],
                 composition=res["composition"],
                 closest_day=res["closest_day"],
-                speed=res["speed"]
+                speed=res["speed"],
             )
 
         return neo
@@ -249,7 +244,7 @@ class NeoDao(metaclass=Singleton):
                     diameter=row["diameter"],
                     distance=row["distance"],
                     closest_day=row["closest_day"],
-                    speed=row["speed"]
+                    speed=row["speed"],
                 )
 
                 neos_list.append(neo)
@@ -283,7 +278,7 @@ class NeoDao(metaclass=Singleton):
                             "distance": neo.distance,
                             "closest_day": neo.closest_day,
                             "id_neo": neo.id_neo,
-                            "speed": neo.speed
+                            "speed": neo.speed,
                         },
                     )
                     nb_affected_rows = cursor.rowcount
