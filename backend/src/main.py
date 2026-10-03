@@ -5,6 +5,7 @@ Initializes logging, loads environment variables, and
 sets up API routers.
 """
 
+from dao.create_database import create_database
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, RedirectResponse
@@ -15,7 +16,6 @@ from controller import (
     notification_controller,
     user_controller,
 )
-from dao.create_database import create_database
 from utils.env_variables import (
     display_values,
     load_environment_variables,
@@ -39,7 +39,7 @@ display_values()
 logger = get_logger(__name__)
 
 
-app = FastAPI(title="My Webservice")
+app = FastAPI(title="NEO-Watch")
 
 app.add_middleware(LogMiddleware)
 
