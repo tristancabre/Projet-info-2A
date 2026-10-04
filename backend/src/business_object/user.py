@@ -8,6 +8,7 @@ class User(ABC):
         self.username = username
         self.password = password
         self.email = email
+        self.is_admin = None
 
     @staticmethod
     def hash_password(plain_password: str) -> str:
@@ -33,11 +34,7 @@ class RegularUser(User):
     ):
         super().__init__(username, password, email, id_user)
         self.visitor_name = visitor_name
-
-    @property
-    def is_admin(self) -> bool:
-        """Distinguish roles for different Users: False for Visitors."""
-        return False
+        self.is_admin = False
 
 
 class Administrator(User):
@@ -51,8 +48,4 @@ class Administrator(User):
     ):
         super().__init__(username, password, email, id_user)
         self.admin_name = admin_name
-
-    @property
-    def is_admin(self) -> bool:
-        """Distinguish roles for different Users: True for Administrators."""
-        return True
+        self.is_admin = True

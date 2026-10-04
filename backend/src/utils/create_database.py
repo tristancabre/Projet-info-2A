@@ -16,7 +16,8 @@ def create_database():
                 username     VARCHAR(30) UNIQUE NOT NULL,
                 password     VARCHAR(256) NOT NULL,
                 email        VARCHAR(50) NOT NULL,
-                access_token VARCHAR(255)
+                access_token VARCHAR(255),
+                is_admin     BOOLEAN
             );
         """)
 
