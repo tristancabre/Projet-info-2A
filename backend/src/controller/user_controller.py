@@ -46,7 +46,7 @@ async def user_by_id(id_user: int, user_service=Depends(get_user_service)):
     return user
 
 
-@router.post("/", response_model=UserReadModel, tags=["users"])
+@router.post("/", response_model=UserReadModel, tags=["Users"])
 async def create_user(p: UserModel, user_service=Depends(get_user_service)):
     """Create a new user.
     Args:
@@ -69,7 +69,7 @@ async def create_user(p: UserModel, user_service=Depends(get_user_service)):
     return user
 
 
-@router.put("/{id_user}", response_model=UserReadModel, tags=["users"])
+@router.put("/{id_user}", response_model=UserReadModel, tags=["Users"])
 async def update_user(id_user: int, p: UserModel, user_service=Depends(get_user_service)):
     """Update an existing user's information.
     Args:
