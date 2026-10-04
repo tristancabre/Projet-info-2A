@@ -9,7 +9,7 @@ from service import neo_service
 from service.notification_service import NotificationService
 from utils.auth import get_current_user_id
 
-router = APIRouter()
+router = APIRouter(prefix="/notifications", tags=["Notifications"])
 
 
 notification_service = NotificationService()
@@ -23,7 +23,7 @@ class NotificationResponse(BaseModel):
     created_at: datetime
 
 
-@router.get("/", response_model=list[NotificationResponse], tags=["Notifications"])
+@router.get("", response_model=list[NotificationResponse])
 def get_notifications(id_user: int = Depends(get_current_user_id)):
     """Returns the notifications of the connected user."""
     return [
