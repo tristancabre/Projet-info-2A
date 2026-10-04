@@ -19,6 +19,7 @@ def get_neo_service():
 
 # --- Routes "statiques" déclarées AVANT /{id_neo} pour éviter tout conflit ---
 
+
 @router.get("/approaching", response_model=list[NeoReadModel], tags=["Neos"])
 async def neos_approaching(
     days: int = Query(7, ge=1, description="Fenêtre en jours à partir d'aujourd'hui"),
@@ -79,6 +80,7 @@ async def neos_by_closest_day(
 
 # --- Route dynamique en dernier ---
 
+
 @router.get("/{id_neo}", response_model=NeoReadModel, tags=["Neos"])
 async def neo_by_id(id_neo: int, neo_service=Depends(get_neo_service)):
     """Find a neo by their unique ID.
@@ -112,18 +114,10 @@ async def find_all_neos(neo_service=Depends(get_neo_service)):
 
 
 @router.post("/update")
-async def update_neos():
-
+def update_neos():
     nasa_database = NasaDao()
 
-    try:
-        neos = nasa_database.recuperer_donnees_nasa()
-        nasa_database.inserer_donnees_sql(neos)
+    neos = nasa_database.recuperer_donnees_nasa()
+    nasa_database.inserer_donnees_sql(neos)
 
-        return {
-            "message": "NEO data successfully updated",
-            "count": len(neos)
-        }
-
-    finally:
-        nasa_database.fermer_connection()
+    return {"message": "NEO data successfully updated", "count": len(neos)}
