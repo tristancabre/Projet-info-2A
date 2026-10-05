@@ -8,7 +8,6 @@ class User(ABC):
         self.username = username
         self.password = password
         self.email = email
-        self.is_admin = None
 
     @staticmethod
     def hash_password(plain_password: str) -> str:
@@ -21,6 +20,7 @@ class User(ABC):
     @abstractmethod
     def is_admin(self) -> bool:
         """True for an administrator, False for a regular user."""
+        pass
 
 
 class RegularUser(User):
@@ -34,7 +34,11 @@ class RegularUser(User):
     ):
         super().__init__(username, password, email, id_user)
         self.visitor_name = visitor_name
-        self.is_admin = False
+
+    @property
+    def is_admin(self) -> bool:
+        """True for an administrator, False for a regular user."""
+        return False
 
 
 class Administrator(User):
@@ -48,4 +52,8 @@ class Administrator(User):
     ):
         super().__init__(username, password, email, id_user)
         self.admin_name = admin_name
-        self.is_admin = True
+
+    @property
+    def is_admin(self) -> bool:
+        """True for an administrator, False for a regular user."""
+        return True

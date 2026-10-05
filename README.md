@@ -59,8 +59,6 @@ UVICORN_PORT=5000
 
 BACKEND_URL=http://localhost:5000
 BACKEND_TIMEOUT=5
-
-ELO_K_FACTOR=32
 ```
 
 ### Launch applications

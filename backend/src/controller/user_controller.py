@@ -62,7 +62,7 @@ async def create_user(p: UserModel, user_service=Depends(get_user_service)):
     if user_service.username_already_used(p.username):
         raise HTTPException(status_code=400, detail="Username already used.")
 
-    user = user_service.create(p.username, p.password, p.email, p.is_admin)
+    user = user_service.create(p.username, p.password, p.email)
     if not user:
         raise HTTPException(status_code=500, detail="Error while creating user.")
 

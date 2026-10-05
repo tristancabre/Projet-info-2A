@@ -10,6 +10,7 @@ CREATE TABLE project.user (
     username     VARCHAR(30) UNIQUE NOT NULL,
     password     VARCHAR(256) NOT NULL,
     email        VARCHAR(50) NOT NULL,
+    is_admin     BOOLEAN,
     access_token VARCHAR(255)
 );
 
