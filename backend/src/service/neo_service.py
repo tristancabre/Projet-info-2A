@@ -14,7 +14,7 @@ class NeoService:
     def search_by_name(self, name: str) -> list[Neo]:
         """Case insensitive partial match on the name."""
         name = name.strip().lower()
-        return [n for n in NeoDao().find_all() if name in n.name.lower()]
+        return NeoDao().find_by_name(name)
 
     def find_all(self) -> list[Neo]:
         """Returns every registered Neo."""

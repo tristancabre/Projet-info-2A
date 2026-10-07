@@ -46,6 +46,24 @@ async def user_by_id(id_user: int, user_service=Depends(get_user_service)):
     return user
 
 
+@router.get("/{username}", response_model=UserReadModel, tags=["Users"])
+async def user_by_username(username: str, user_service=Depends(get_user_service)):
+    """Find a user by its username.
+    Args:
+        username (str)
+        user_service (UserService): The service used to interact with user data
+    Returns:
+        UserReadModel: The user data if found
+    Raises:
+        HTTPException: 404 error if the user is not found
+    """
+    logger.info("Find a user by its username")
+    user = user_service.find_by_username(username)
+    if not user:
+        raise HTTPException(status_code=404, detail="user (username={username}) not found.")
+    return user
+
+
 @router.post("/", response_model=UserReadModel, tags=["Users"])
 async def create_user(p: UserModel, user_service=Depends(get_user_service)):
     """Create a new user.
