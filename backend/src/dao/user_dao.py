@@ -58,22 +58,24 @@ class UserDao(metaclass=Singleton):
             created = True
         return created
 
+    @log
     def find_by_username(self, username: str) -> User | None:
         """Find a user by their username."""
         try:
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        'SELECT * FROM project."user" WHERE username = %(username)s;',
+                        "SELECT * FROM project.user WHERE username = %(username)s;",
                         {"username": username},
                     )
                     res = cursor.fetchone()
-        except Exception as e:
-            logger.error(e)
+        except Exception:
+            logger.exception("Error while looking for a user by username")
             raise
 
         return self._row_to_user(res) if res else None
 
+    @log
     def list_all(self) -> list[User]:
         try:
             with DBConnection().connection as connection:
