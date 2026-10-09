@@ -3,7 +3,7 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from dao.nasa_dao import NasaDao
-from schema.neo_model import NeoReadModel
+from schema.neo_model import NeoModel, NeoReadModel
 from service.neo_service import NeoService
 from utils.log_utils import get_logger
 
@@ -124,11 +124,11 @@ def update_database():
 
 
 @router.put("/{id_neo}", response_model=NeoReadModel, tags=["Neos"])
-async def update_neo(id_neo: int, p: NeoReadModel, neo_service=Depends(get_neo_service)):
+async def update_neo(id_neo: int, p: NeoModel, neo_service=Depends(get_neo_service)):
     """Update an existing neo's information.
     Args:
         id_neo (int)
-        p (NeoReadModel): The new data for the neo.
+        p (NeoModel): The new data for the neo.
         neo_service (NeoService): The service used to interact with neo data.
     Returns:
         str: A confirmation message indicating the neo was updated.
@@ -176,13 +176,13 @@ async def delete_neo(id_neo: int, neo_service=Depends(get_neo_service)):
 
 
 @router.post("/", response_model=NeoReadModel, tags=["Neos"])
-async def create_neo(p: NeoReadModel, neo_service=Depends(get_neo_service)):
+async def create_neo(p: NeoModel, neo_service=Depends(get_neo_service)):
     """Create a new neo.
     Args:
-        p (NeoReadModel): The neo data to create.
+        p (NeoModel): The neo data to create.
         neo_service (NeoService): The service used to interact with neo data.
     Returns:
-        neoReadModel: The newly created neo data.
+        NeoReadModel: The newly created neo data.
     Raises:
         HTTPException: 400 error if the neoname is already taken.
         HTTPException: 500 error if the creation process fails.
