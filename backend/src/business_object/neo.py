@@ -7,11 +7,10 @@ class Neo:
     def __init__(
         self,
         name: str,
-        id_neo: int,
         diameter: float | None,
         distance: float,
         closest_day: date,
-        speed: float | None,
+        speed: float | None, id_neo: int | None = None
     ):
         self.name = name
         self.id_neo = id_neo

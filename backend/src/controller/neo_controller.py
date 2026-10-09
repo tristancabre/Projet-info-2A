@@ -153,3 +153,44 @@ async def update_neo(id_neo: int, p: NeoReadModel, neo_service=Depends(get_neo_s
         raise HTTPException(status_code=500, detail="Error while updating neo.")
 
     return neo
+
+
+@router.delete("/{id_neo}", tags=["Neos"])
+async def delete_neo(id_neo: int, neo_service=Depends(get_neo_service)):
+    """Delete a neo from the system.
+    Args:
+        id_neo (int)
+        neo_service (NeoService): The service used to interact with neo data.
+    Returns:
+        str: A confirmation message indicating the neo was deleted.
+    Raises:
+        HTTPException: 404 error if the neo is not found.
+    """
+    logger.info("Delete a neo")
+    neo = neo_service.search_by_id(id_neo)
+    if not neo:
+        raise HTTPException(status_code=404, detail="neo (id={id_neo}) not found.")
+
+    neo_service.delete(neo)
+    return f"neo {neo.name} deleted"
+
+
+@router.post("/", response_model=NeoReadModel, tags=["Neos"])
+async def create_neo(p: NeoReadModel, neo_service=Depends(get_neo_service)):
+    """Create a new neo.
+    Args:
+        p (NeoReadModel): The neo data to create.
+        neo_service (NeoService): The service used to interact with neo data.
+    Returns:
+        neoReadModel: The newly created neo data.
+    Raises:
+        HTTPException: 400 error if the neoname is already taken.
+        HTTPException: 500 error if the creation process fails.
+    """
+    logger.info("Create a neo")
+
+    neo = neo_service.create(p.name, p.diameter, p.distance, p.speed, p.closest_day, p.rarity)
+    if not neo:
+        raise HTTPException(status_code=500, detail="Error while creating neo.")
+
+    return neo

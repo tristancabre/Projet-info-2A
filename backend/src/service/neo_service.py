@@ -64,3 +64,22 @@ class NeoService:
         if not NeoDao().update(neo):
             return None
         return neo
+
+    @log
+    def delete(self, neo: Neo) -> bool:
+        return NeoDao().delete(neo)
+
+    @log
+    def create(
+        self,
+        name: str,
+        diameter: float | None,
+        distance: float | None,
+        speed: float | None,
+        closest_day: date,
+        rarity,
+    ) -> Neo:
+
+        neo = Neo(name, diameter, distance, speed, closest_day, rarity)
+        NeoDao().create(neo)
+        return neo

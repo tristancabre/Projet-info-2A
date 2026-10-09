@@ -83,4 +83,4 @@ class UserService:
 
     @log
     def delete(self, user: User) -> bool:
-        return UserDao.delete(user)
+        return UserDao().delete(user)
