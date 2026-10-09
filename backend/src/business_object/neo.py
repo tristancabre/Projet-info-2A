@@ -11,11 +11,11 @@ class Neo:
         distance: float,
         closest_day: date,
         speed: float | None,
-        rarity: int | None,
-        id_neo: int | None = None
+        id_neo: int | None = None,
+        rarity: int | None = None,
     ):
-        self.id_neo = id_neo
         self.name = name
+        self.id_neo = id_neo
         self.diameter = diameter
         self.distance = distance
         self.closest_day = closest_day
