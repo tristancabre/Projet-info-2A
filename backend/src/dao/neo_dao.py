@@ -265,13 +265,13 @@ class NeoDao(metaclass=Singleton):
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "UPDATE neo                                                  "
-                        "   SET name = %(name)s,                                "
-                        "       diameter = %(diameter)s,                                          "
-                        "       distance = %(distance)s,                                      "
-                        "       closest_day = %(closest_day)s,                        "
-                        "       speed = %(speed)s,                       "
-                        " WHERE id_neo = %(id_neo)s;                              ",
+                        "UPDATE neo                           "
+                        "   SET name = %(name)s,              "
+                        "       diameter = %(diameter)s,      "
+                        "       distance = %(distance)s,      "
+                        "       closest_day = %(closest_day)s,"
+                        "       speed = %(speed)s             "
+                        " WHERE id_neo = %(id_neo)s;          ",
                         {
                             "name": neo.name,
                             "diameter": neo.diameter,
