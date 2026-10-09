@@ -23,7 +23,7 @@ class NeoModel(BaseModel):
     distance: float
     closest_day: date
     speed: float | None = None
-    rarity: str | None = None
+    rarity: int
 
     @field_validator("diameter", "distance", "speed")
     @classmethod
@@ -45,5 +45,5 @@ class NeoReadModel(NeoModel):
             distance=neo.distance,
             closest_day=neo.closest_day,
             speed=neo.speed,
-            rarity=getattr(neo, "rarity", None),
+            rarity=neo.rarity,
         )

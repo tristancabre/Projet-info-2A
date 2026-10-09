@@ -2,7 +2,7 @@ from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from dao.nasa_dao import NasaDao
+from dao.neo_dao import NeoDao
 from schema.neo_model import NeoModel, NeoReadModel
 from service.neo_service import NeoService
 from utils.log_utils import get_logger
@@ -113,9 +113,9 @@ async def find_all_neos(neo_service=Depends(get_neo_service)):
     return neo_service.find_all()
 
 
-@router.post("/update_database")
+@router.post("/update_database", tags=["Neos"])
 def update_database():
-    nasa_database = NasaDao()
+    nasa_database = NeoDao()
 
     neos = nasa_database.recuperer_donnees_nasa()
     nasa_database.inserer_donnees_sql(neos)

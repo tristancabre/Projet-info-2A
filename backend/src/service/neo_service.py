@@ -72,14 +72,11 @@ class NeoService:
     @log
     def create(
         self,
-        name: str,
-        diameter: float | None,
-        distance: float | None,
-        speed: float | None,
-        closest_day: date,
-        rarity,
-    ) -> Neo:
+        name: str, diameter: float | None,
+        distance: float | None, speed: float | None,
+        closest_day: date, rarity: int) -> Neo:
 
-        neo = Neo(name, diameter, distance, speed, closest_day, rarity)
+        neo = Neo(name=name, diameter=diameter, distance=distance,
+                  closest_day=closest_day, speed=speed)
         NeoDao().create(neo)
         return neo
