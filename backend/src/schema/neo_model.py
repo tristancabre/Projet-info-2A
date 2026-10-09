@@ -12,6 +12,6 @@ class NeoReadModel(BaseModel):
     distance: float | None
     closest_day: date
     speed: float | None
-
+    rarity: int
     # Allows building the model directly from a Neo business object
     model_config = {"from_attributes": True}
