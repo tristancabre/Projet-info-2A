@@ -69,9 +69,9 @@ class NeoDao(metaclass=Singleton):
                         # Conversion des valeurs numériques
                         diameter = self.vers_float(neo.get("diameter"))
 
-                        distance = self.vers_float(neo.get("dist"))
+                        distance = round(self.vers_float(neo.get("dist")), 6)
 
-                        speed = self.vers_float(neo.get("v_rel"))
+                        speed = round(self.vers_float(neo.get("v_rel")), 6)
 
                         # Conversion de la date
                         date_str = neo.get("cd")

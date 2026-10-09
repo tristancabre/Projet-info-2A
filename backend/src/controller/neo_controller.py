@@ -113,8 +113,8 @@ async def find_all_neos(neo_service=Depends(get_neo_service)):
     return neo_service.find_all()
 
 
-@router.post("/update")
-def update_neos():
+@router.post("/update_database")
+def update_database():
     nasa_database = NasaDao()
 
     neos = nasa_database.recuperer_donnees_nasa()

@@ -48,3 +48,7 @@ class NeoService:
         limit = today + timedelta(days=days)
         approaching = [n for n in NeoDao().find_all() if today <= n.closest_day <= limit]
         return sorted(approaching, key=lambda n: n.closest_day)
+
+    def update(self, id_neo, name):
+        neo = self.find_by_id(id_neo)
+        neo.name = name
