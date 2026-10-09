@@ -121,3 +121,35 @@ def update_database():
     nasa_database.inserer_donnees_sql(neos)
 
     return {"message": "NEO data successfully updated", "count": len(neos)}
+
+
+@router.put("/{id_neo}", response_model=NeoReadModel, tags=["Neos"])
+async def update_neo(id_neo: int, p: NeoReadModel, neo_service=Depends(get_neo_service)):
+    """Update an existing neo's information.
+    Args:
+        id_neo (int)
+        p (NeoReadModel): The new data for the neo.
+        neo_service (NeoService): The service used to interact with neo data.
+    Returns:
+        str: A confirmation message indicating the neo was updated.
+    Raises:
+        HTTPException: 404 error if the neo is not found.
+        HTTPException: 500 error if the update process fails.
+    """
+    logger.info("Update a neo")
+    neo = neo_service.search_by_id(id_neo)
+    if not neo:
+        raise HTTPException(status_code=404, detail="neo (id={id_neo}) not found.")
+
+    neo.name = p.name
+    neo.diameter = p.diameter
+    neo.distance = p.distance
+    neo.speed = p.speed
+    neo.closest_day = p.closest_day
+    neo.rarity = p.rarity
+
+    neo = neo_service.update(neo)
+    if not neo:
+        raise HTTPException(status_code=500, detail="Error while updating neo.")
+
+    return neo

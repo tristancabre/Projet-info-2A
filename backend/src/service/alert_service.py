@@ -3,6 +3,7 @@ from business_object.alert import Alert
 from dao.alert_dao import AlertDao
 from service.neo_service import NeoService
 from service.notification_service import NotificationService
+from utils.log_utils import log
 
 
 class AlertNotFoundError(Exception):
@@ -18,6 +19,7 @@ class AlertService:
         self.notification_service = NotificationService | None
         self.neo_service = NeoService()
 
+    @log
     def create_alert(
         self,
         id_user: int,
@@ -44,12 +46,15 @@ class AlertService:
         self._check_alert_now(alert)
         return alert
 
+    @log
     def get_alert(self, id_alert: int, id_user: int) -> Alert:
         return self._get_owned_alert(id_alert, id_user)
 
+    @log
     def list_user_alerts(self, id_user: int) -> list[Alert]:
         return self.alert_dao.get_by_user(id_user)
 
+    @log
     def update_alert(
         self,
         id_alert: int,
@@ -75,6 +80,7 @@ class AlertService:
         self._check_alert_now(alert)
         return alert
 
+    @log
     def set_active(self, id_alert: int, id_user: int, is_active: bool) -> Alert:
         alert = self._get_owned_alert(id_alert, id_user)
         alert.is_active = is_active
@@ -84,12 +90,14 @@ class AlertService:
             self._check_alert_now(alert)
         return alert
 
+    @log
     def delete_alert(self, id_alert: int, id_user: int) -> bool:
         self._get_owned_alert(id_alert, id_user)
         return self.alert_dao.delete(id_alert)
 
     # ---------- private helpers ----------
 
+    @log
     def _get_owned_alert(self, id_alert: int, id_user: int) -> Alert:
         """Checks that the alert exists and belongs to the user."""
         alert = self.alert_dao.get_by_id(id_alert)
@@ -123,6 +131,7 @@ class AlertService:
             if value is not None and value < 0:
                 raise ValueError(f"{name} cannot be negative")
 
+    @log
     def _check_alert_now(self, alert: Alert) -> None:
         """Generates notifications right away if a Neo already matches the alert."""
         if not alert.is_active:

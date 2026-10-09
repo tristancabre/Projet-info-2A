@@ -3,12 +3,14 @@ from business_object.alert import Alert
 from business_object.neo import Neo
 from business_object.notification import Notification
 from dao.notification_dao import NotificationDao
+from utils.log_utils import log
 
 
 class NotificationService:
     def __init__(self):
         self.notification_dao = NotificationDao()
 
+    @log
     def generate(self, alerts: list[Alert], neos: list[Neo]) -> list[Notification]:
         """Create and save notifications for Neos matching an alert."""
         already_sent = self.notification_dao.get_sent_pairs()
@@ -25,10 +27,12 @@ class NotificationService:
             self.notification_dao.save_many(new_notifications)
         return new_notifications
 
+    @log
     def get_user_notifications(self, id_user: int) -> list[Notification]:
         return self.notification_dao.get_by_user(id_user)
 
     # service/notification_service.py supplémentaire pour envoyer une notif
+    @log
     def check_all_alerts(self, alert_dao, neo_service) -> int:
         """Checks every active alert against upcoming Neos.
         Returns the number of new notifications."""
