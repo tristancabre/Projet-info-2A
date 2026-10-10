@@ -36,9 +36,10 @@ CREATE TABLE project.neo (
 DROP TABLE IF EXISTS project.favorites CASCADE;
 CREATE TABLE project.favorites (
     id_favorite SERIAL PRIMARY KEY,
-    id_user     INTEGER REFERENCES project.user(id_user) ON DELETE CASCADE,
-    id_neo      INTEGER REFERENCES project.neo(id_neo) ON DELETE CASCADE,
-    date_added  DATE
+    id_user     INTEGER NOT NULL REFERENCES project."user"(id_user) ON DELETE CASCADE,
+    id_neo      INTEGER NOT NULL REFERENCES project.neo(id_neo) ON DELETE CASCADE,
+    date_added  DATE NOT NULL DEFAULT CURRENT_DATE,
+    CONSTRAINT favorites_user_neo_key UNIQUE (id_user, id_neo)
 );
 
 -----------------------------------------------------

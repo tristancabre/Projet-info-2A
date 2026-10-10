@@ -24,7 +24,7 @@ async def find_all_users(user_service=Depends(get_user_service)):
         list[UserReadModel]: A list of all registered users.
     """
     logger.info("List all users")
-    users_list = user_service.find_all()
+    users_list = user_service.list_all()
     return users_list
 
 
@@ -42,25 +42,20 @@ async def user_by_id(id_user: int, user_service=Depends(get_user_service)):
     logger.info("Find a user by id")
     user = user_service.find_by_id(id_user)
     if not user:
-        raise HTTPException(status_code=404, detail="user (id={id_user}) not found.")
+        raise HTTPException(status_code=404, detail=f"user (id={id_user}) not found.")
     return user
 
 
-@router.get("/{username}", response_model=UserReadModel, tags=["Users"])
-async def user_by_username(username: str, user_service=Depends(get_user_service)):
+@router.get("/by-username/{username}", response_model=UserReadModel, tags=["Users"])
+def user_by_username(username: str, user_service: UserService = Depends(get_user_service)):
     """Find a user by its username.
-    Args:
-        username (str)
-        user_service (UserService): The service used to interact with user data
-    Returns:
-        UserReadModel: The user data if found
     Raises:
         HTTPException: 404 error if the user is not found
     """
     logger.info("Find a user by its username")
     user = user_service.find_by_username(username)
     if not user:
-        raise HTTPException(status_code=404, detail="user (username={username}) not found.")
+        raise HTTPException(status_code=404, detail=f"user (username={username}) not found.")
     return user
 
 
@@ -103,7 +98,7 @@ async def update_user(id_user: int, p: UserModel, user_service=Depends(get_user_
     logger.info("Update a user")
     user = user_service.find_by_id(id_user)
     if not user:
-        raise HTTPException(status_code=404, detail="user (id={id_user}) not found.")
+        raise HTTPException(status_code=404, detail=f"user (id={id_user}) not found.")
 
     user.username = p.username
     user.password = p.password
@@ -130,7 +125,7 @@ async def delete_user(id_user: int, user_service=Depends(get_user_service)):
     logger.info("Delete a user")
     user = user_service.find_by_id(id_user)
     if not user:
-        raise HTTPException(status_code=404, detail="user (id={id_user}) not found.")
+        raise HTTPException(status_code=404, detail=f"user (id={id_user}) not found.")
 
     user_service.delete(user)
     return f"user {user.username} deleted"

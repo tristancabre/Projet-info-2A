@@ -11,6 +11,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, RedirectResponse
 
 from controller import (
+    favorite_controller,
     login_controller,
     neo_controller,
     notification_controller,
@@ -85,6 +86,7 @@ app.include_router(neo_controller.router, prefix="/neo", tags=["Neos"])
 
 app.include_router(notification_controller.router, tags=["Notifications"])
 
+app.include_router(favorite_controller.router, prefix="/favorites", tags=["Favorites"])
 
 # ============================================================
 # Routes générales
