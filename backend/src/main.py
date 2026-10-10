@@ -6,10 +6,11 @@ sets up API routers.
 """
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, RedirectResponse
 
+from business_object.user import User
 from controller import (
     favorite_controller,
     login_controller,
@@ -17,6 +18,7 @@ from controller import (
     notification_controller,
     user_controller,
 )
+from utils.auth import require_admin
 from utils.create_database import create_database
 from utils.env_variables import (
     display_values,
@@ -42,6 +44,7 @@ display_values()
 
 logger = get_logger(__name__)
 
+create_database()
 
 app = FastAPI(title="Ker Lann NEO-Watch")
 
@@ -108,15 +111,26 @@ async def hello_name(name: str):
     return {"message": f"Hello {name}"}
 
 
-@app.get("/reset_database", tags=["Misc"])
-async def reset_database():
-    """Reset the database."""
+@app.post("/reset_database", tags=["Misc"])
+def reset_database(admin: User = Depends(require_admin)):
+    """Reset the database. Administrators only.
 
-    logger.info("Database reset")
+    Deletes ALL the data, user accounts included.
+    Raises:
+        HTTPException: 500 error if the re-initialization fails.
+    """
+    logger.warning("Database reset requested by %s", admin.username)
 
-    success = create_database()
+    try:
+        success = create_database()
+    except Exception:
+        logger.exception("Database reset failed")
+        success = False
 
-    return {"message": (f"Database re-initialization - {'SUCCESS' if success else 'FAILURE'}")}
+    if not success:
+        raise HTTPException(status_code=500, detail="Database re-initialization - FAILURE")
+
+    return {"message": "Database re-initialization - SUCCESS"}
 
 
 # ============================================================
