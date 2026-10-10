@@ -5,21 +5,29 @@ Gives access to the features of UserService: profile, user list and search,
 account settings (update / delete) and, for administrators, user creation.
 """
 
-import streamlit as st
+import logging
 
-from utils.auth_guard import check_authentification
-from utils.log_init import get_page_logger
-
-from .backend.business_object.user import Administrator
-from .backend.service.user_service import UserService
+import streamlit as st  # noqa: E402
+from business_object.user import Administrator  # noqa: E402
+from service.user_service import UserService  # noqa: E402
 
 st.title("Main menu")
-logger = get_page_logger("user_menu")
+logger = logging.getLogger("user_menu")
 
-check_authentification()
+# Remplace check_authentification()
+session_user = st.session_state.get("user")
+if session_user is None:
+    st.warning("Please log in first.")
+    if st.button("Go to login"):
+        st.switch_page("pages/home.py")
+    st.stop()
 
 service = UserService()
-
+user = service.find_by_username(session_user["username"])
+if user is None:
+    st.error("Your account no longer exists.")
+    del st.session_state["user"]
+    st.stop()
 # On recharge l'utilisateur depuis la base pour avoir un vrai objet User
 session_user = st.session_state.get("user")
 user = service.find_by_username(session_user["username"])
