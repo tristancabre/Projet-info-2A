@@ -1,8 +1,10 @@
 import hashlib
 
-from fastapi import Header, HTTPException
+from fastapi import Depends, Header, HTTPException
 
+from business_object.user import User
 from dao.user_dao import UserDao
+from utils.auth import get_current_user
 
 
 def hash_password(password: str, salt: str = "") -> str:
@@ -17,6 +19,13 @@ def hash_password(password: str, salt: str = "") -> str:
     password_bytes = password.encode("utf-8") + salt.encode("utf-8")
     hash_object = hashlib.sha256(password_bytes)
     return hash_object.hexdigest()
+
+
+def require_admin(current_user: User = Depends(get_current_user)) -> User:
+    """Autorise la route uniquement pour les administrateurs."""
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Administrator rights required.")
+    return current_user
 
 
 def verify_token(x_auth_token=Header(None)) -> UserDao:

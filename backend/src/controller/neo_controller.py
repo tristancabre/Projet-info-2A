@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 from schema.neo_model import NeoModel, NeoReadModel
 from service.neo_service import NeoService
+from utils.auth import require_admin
 from utils.log_utils import get_logger
 
 router = APIRouter()
@@ -19,6 +20,9 @@ def get_neo_service() -> NeoService:
 # Les routes sont déclarées avec `def` (et non `async def`) car le service et le
 # driver de base de données sont synchrones : FastAPI les exécute alors dans un
 # pool de threads au lieu de bloquer la boucle d'événements.
+
+# Droits d'accès : la lecture (GET) est publique ; la création, la modification, la
+# suppression et l'import depuis la NASA sont réservés aux administrateurs (require_admin).
 
 # --- Routes "statiques" déclarées AVANT /{id_neo} pour éviter tout conflit ---
 
@@ -75,15 +79,15 @@ def neos_by_closest_day(
     return neo_service.search_by_closest_day(day)
 
 
-@router.post("/update_database", tags=["Neos"])
+@router.post("/update_database", tags=["Neos"], dependencies=[Depends(require_admin)])
 def update_database(neo_service: NeoService = Depends(get_neo_service)):
-    """Fetch the NEO data from the NASA API and store it in the database."""
+    """Fetch the NEO data from the NASA API and store it in the database. Administrators only."""
     logger.info("Update the neo database from NASA")
     try:
         count = neo_service.refresh_from_nasa()
     except Exception:
         logger.exception("Error while updating the neo database")
-        raise HTTPException(status_code=500, detail="Error while updating the neo database.")  # ruff: ignore[raise-without-from-inside-except]
+        raise HTTPException(status_code=500, detail="Error while updating the neo database.")
     return {"message": "NEO data successfully updated", "count": count}
 
 
@@ -115,9 +119,16 @@ def neo_by_id(id_neo: int, neo_service: NeoService = Depends(get_neo_service)):
     return neo
 
 
-@router.post("/", response_model=NeoReadModel, status_code=201, tags=["Neos"])
+@router.post(
+    "/",
+    response_model=NeoReadModel,
+    status_code=201,
+    tags=["Neos"],
+    dependencies=[Depends(require_admin)],
+)
 def create_neo(p: NeoModel, neo_service: NeoService = Depends(get_neo_service)):
-    """Create a new neo. The rarity is computed from the distance and the diameter.
+    """Create a new neo. Administrators only. The rarity is computed from the distance
+    and the diameter.
 
     Returns:
         NeoReadModel: The newly created neo data.
@@ -131,9 +142,14 @@ def create_neo(p: NeoModel, neo_service: NeoService = Depends(get_neo_service)):
     return neo
 
 
-@router.put("/{id_neo}", response_model=NeoReadModel, tags=["Neos"])
+@router.put(
+    "/{id_neo}",
+    response_model=NeoReadModel,
+    tags=["Neos"],
+    dependencies=[Depends(require_admin)],
+)
 def update_neo(id_neo: int, p: NeoModel, neo_service: NeoService = Depends(get_neo_service)):
-    """Update an existing neo's information. The rarity is recomputed.
+    """Update an existing neo's information. Administrators only. The rarity is recomputed.
 
     Returns:
         NeoReadModel: The updated neo.
@@ -158,9 +174,9 @@ def update_neo(id_neo: int, p: NeoModel, neo_service: NeoService = Depends(get_n
     return neo
 
 
-@router.delete("/{id_neo}", tags=["Neos"])
+@router.delete("/{id_neo}", tags=["Neos"], dependencies=[Depends(require_admin)])
 def delete_neo(id_neo: int, neo_service: NeoService = Depends(get_neo_service)):
-    """Delete a neo from the system.
+    """Delete a neo from the system. Administrators only.
 
     Raises:
         HTTPException: 404 error if the neo is not found.

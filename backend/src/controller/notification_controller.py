@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from dao import alert_dao
 from service import neo_service
 from service.notification_service import NotificationService
-from utils.auth import get_current_user_id
+from utils.auth import get_current_user_id, require_admin
 
 router = APIRouter(prefix="/notifications", tags=["Notifications"])
 
@@ -38,10 +38,10 @@ def get_notifications(id_user: int = Depends(get_current_user_id)):
     ]
 
 
-# check if there are new notifs
+# check if there are new notifs (administrators only: it runs the check for ALL the alerts)
 
 
-@router.post("/check", tags=["Notifications"])
+@router.post("/check", dependencies=[Depends(require_admin)])
 def run_check():
     count = notification_service.check_all_alerts(alert_dao, neo_service)
     return {"new_notifications": count}
