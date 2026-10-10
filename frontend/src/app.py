@@ -9,7 +9,7 @@ if "logs_initialized" not in st.session_state:
     display_values(include_prefix="BACKEND")
     st.session_state["logs_initialized"] = True
 
-if "player" in st.session_state:
-    st.switch_page("pages/player_menu.py")
+if "user" in st.session_state:
+    st.switch_page("pages/user_menu.py")
 else:
     st.switch_page("pages/home.py")

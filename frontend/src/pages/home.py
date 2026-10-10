@@ -15,9 +15,9 @@ from utils.api_client import api_client
 from utils.log_init import get_page_logger
 
 if "player" in st.session_state:
-    st.switch_page("pages/player_menu.py")
+    st.switch_page("pages/user_menu.py")
 
-st.set_page_config(page_title="Coin flip game", page_icon="🪙", layout="centered")
+st.set_page_config(page_title="Ker Lann Space Watch", page_icon="🪙", layout="centered")
 
 st.markdown(
     f"""
