@@ -1,32 +1,11 @@
-# ENSAI-2A-projet-info-template
-
-![CI](https://github.com/ludo2ne/ENSAI-2A-projet-info-template/actions/workflows/ci.yml/badge.svg)
-
-Template for the ENSAI 2nd year IT project.
-
-This very simple application includes a few elements that may help with the info 2A project:
-
-- Creating a webservice with FastAPI
-- Layer programming (DAO, service, view, business_object)
-- Connection to a database
-- Calling a Webservice
-- Interface with Streamlit
-
-## :arrow_forward: Quick launch with SSP Cloud
-
-Needed: [SSP Cloud](https://datalab.sspcloud.fr/) account.
+# Ker-Lann Neo-Watch 
 
 ### Start a service and import the project
 
 - [ ] Launch a **VSCode-python** service (including Visual Studio Code, Python 3.13, Git)
   - Open ports 5000 and 8000 (Otherwise, you won't be able to access your application from the web)
-- [ ] Open a terminal
-- [ ] Clone the repository
-  - `git clone https://github.com/ludo2ne/ENSAI-2A-projet-info-template.git`
-- [ ] Open Folder of the repository
-  - `code-server ENSAI-2A-projet-info-template` or File > Open Folder
-  - *ENSAI-2A-projet-info-template* should be the root directory of your Explorer
-  - :warning: if not the application will not launch. Retry open folder
+- Clone the following repository : ![CI](https://github.com/tristancabre/Projet-info-2A.git)
+- Launch the service
 
 ### Install required packages
 
@@ -59,6 +38,8 @@ UVICORN_PORT=5000
 
 BACKEND_URL=http://localhost:5000
 BACKEND_TIMEOUT=5
+
+JWT_SECRET=
 ```
 
 ### Launch applications
