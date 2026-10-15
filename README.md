@@ -4,8 +4,8 @@
 
 - [ ] Launch a **VSCode-python** service (including Visual Studio Code, Python 3.13, Git)
   - Open ports 5000 and 8000 (Otherwise, you won't be able to access your application from the web)
-- Clone the following repository : ![CI](https://github.com/tristancabre/Projet-info-2A.git)
-- Launch the service
+- [ ] Clone the following repository : https://github.com/tristancabre/Projet-info-2A.git
+- [ ] Launch the service
 
 ### Install required packages
 
@@ -49,8 +49,6 @@ Open two terminals:
 - Backend FastApi: `uv run --project backend python backend/src/main.py`
 - Frontend Streamlit: `cd frontend` and `uv run --project . streamlit run src/app.py`
 
-:bulb: First Launch: Click on **Reset Database** to initialize it.
-
 :warning: **After launching, do not click on the link in the pop-up!**
 
 
@@ -61,41 +59,11 @@ Since the application runs inside a cloud container, the services are not direct
 To get the public URL for your services (Frontend or Backend):
 
 - [ ] Go to your [Onyxia services](https://datalab.sspcloud.fr/my-services)
-- [ ] Click on the **"Open"** button, you will see links to access the api and/or the gui
-
-
-### Endpoints
-
-Documentation : `/docs` or `/redoc`
-
-Examples of endpoints, assuming that the environment variable `$API_URL` (e.g. `export API_URL=http://localhost:5000`) contains the URL of the web service:
-
-- `curl -L -X GET $API_URL/player | jq .`
-- `curl -L -X GET $API_URL/player/3 | jq .`
-- ```
-  curl -L -X POST "$API_URL/player" \
-    -H "Content-Type: application/json" \
-    -d '{
-      "username": "patapouf",
-      "password": "123456789abcdefghijklmnopqrstuvwxyz",
-      "elo": 1500,
-      "email": "patapouf@mail.fr",
-      "pokemon_fan": true
-    }' | jq .
-  ```
-- ```
-  curl -L -X PUT "$API_URL/player/3" \
-    -H "Content-Type: application/json" \
-    -d '{
-      "username": "maurice_new",
-      "password": "123456789abcdefghijklmnopqrstuvwxyz",
-      "elo": 1400,
-      "email": "maurice@ensai.fr",
-      "pokemon_fan": true
-    }' | jq .
-  ```
-- `curl -L -X DELETE "$API_URL/player/5" | jq .`
-
+- [ ] Click on the **"Open"** button, you will see links to access the application
+- Port 5000 corresponds to the swagger of the API
+- **Backend API:** http://localhost:5000
+- Port 8000 corresponds to the actual dashboard
+- **Frontend UI:** http://localhost:8000
 
 ## :arrow_forward: Project structure
 
@@ -135,28 +103,3 @@ When you *push* on GitHub, it triggers a pipeline that will perform the followin
   - If the score is less than 7.5, the step will fail
 
 You can check how this pipeline is progressing on your repository's GitHub page, *Actions* tab.
-
-
-## :arrow_forward: Quick launch with Docker
-
-Prerequisites: [Docker Desktop](https://docs.docker.com/desktop/).
-
-**Dockerfile**: A text document containing all the commands a user could call to assemble a specific image (the blueprint of your application and its environment).
-
-**Docker Compose**: A tool for defining and running multi-container applications, using a YAML file to configure how different services (like your backend, frontend, and database) interact and start together.
-
-- [ ] Build containers:  `docker compose up --build -d`
-- [ ] See running processes: `docker compose ps`
-
-To see logs:
-
-- `docker compose logs -f` for all containers
-- `docker compose logs -f backend` only for backend
-
-**Backend API:** http://localhost:5000
-**Frontend UI:** http://localhost:8000
-
-- [ ]  `docker compose down` to remove conainers
-  - `docker compose stop` to simply stop
-
-[How it works](https://github.com/olevitt/kubernetes)
