@@ -29,6 +29,8 @@ CREATE TABLE project.neo (
     rarity      INT
 );
 
+-- màj une NEo déjà présent au lieu de le dupliquer avec : 
+ALTER TABLE project.neo ADD CONSTRAINT neo_name_key UNIQUE (name);
 -----------------------------------------------------
 -- Favorites
 -----------------------------------------------------
